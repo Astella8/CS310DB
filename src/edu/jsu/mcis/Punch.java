@@ -12,12 +12,12 @@ public class Punch {
 	private GregorianCalendar original;
 	private GregorianCalendar adjusted;
 	
-		public Punch(int terminalId, String badgeId, int shiftId, long originalts, long adjustedts){
+		public Punch(int terminalId, String badgeId, int shiftId, long adjustedts){
 		
 			original = new GregorianCalendar();
 			adjusted = new GregorianCalendar();
                         original.setTimeInMillis(originalts);
-                        adjusted.setTimeInMillis(adjustedts);
+                        //adjusted.setTimeInMillis(adjustedts);
 			this.terminalId = terminalId;
 			this.badgeId = badgeId;
 			this.shiftId = shiftId;

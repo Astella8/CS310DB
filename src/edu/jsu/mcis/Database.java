@@ -53,7 +53,7 @@ public class Database {
     public Punch getPunch(String id) {
         
         Punch p = null;
-        GregorianCalendar originalts = null;
+        Long originalts = null;
         GregorianCalendar adjustts = null;
         
         try {
@@ -68,10 +68,11 @@ public class Database {
                 // Punch Description
                 int terminalId = rs.getInt(2);
                 long orginalts = rs.getLong(4);
+                long adjustedts = 0;
                 
         
-                p = new Punch(terminalId, badgeId, shiftId, originalts, adjustedts);
-                System.out.println("#" + badgeId + "CLOCKED IN:"  + originalts);
+                p = new Punch(terminalId, badgeId, shiftId, adjustedts);
+                System.out.println("#" + badgeId + "CLOCKED IN:"  + adjustedts);
             }
 
         }
@@ -83,6 +84,8 @@ public class Database {
         return p;
         
     }
+}
+    /*
     public Shift getShift(){
         Shift s = null;
         try{
@@ -104,3 +107,4 @@ public class Database {
         
     }
 }
+*/

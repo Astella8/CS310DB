@@ -1,15 +1,7 @@
 package edu.jsu.mcis;
 
 import java.sql.*;  
-import java.util.logging.Level;
-import java.util.logging.Logger;
-/*
- * Project from Snellan CS310 Software Engineering Class
- * Feature 1 of 4
- * Badge ID, Database and Shift Classes
- * @author Amberley Echols, Brandon Morris, Matthew Price, 
- *  Braden Norris Hearn, Hannah Cronen, Abby Waddell 
- */
+
 
 public class Database {
     
@@ -21,7 +13,7 @@ public class Database {
         
             Class.forName("com.mysql.jdbc.Driver").newInstance();  
             String u = "root";
-            String p = "norris";
+            String p = "root";
             
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas",u,p);
             
@@ -51,20 +43,53 @@ public class Database {
 
         }
         
-        catch (Exception e) {
+        catch (SQLException e) {
             System.err.println(e.toString());
         }
         
         return b;
         
     }
+    public Punch getPunch(String id) {
+        
+        Punch p = null;
+        
+        try {
+            
+            Statement stmt = conn.createStatement();
+            
+            ResultSet rs = stmt.executeQuery("SELECT * FROM event WHERE id='" + id + "'");
+            
+            while(rs.next()) {
+                int shiftId = rs.getInt(5);
+                String badgeId = rs.getString(3);
+                // Punch Description
+                int terminalId = rs.getInt(2);
+                Long orginalts = rs.getLong(4);
+                Long adjustedts = null;
+                String originalts = null;
+                
+                
+        
+                p = new Punch(terminalId, badgeId, shiftId, originalts, adjustedts);
+                System.out.println("#" + badgeId + "CLOCKED IN:"  + originalts);
+            }
+
+        }
+        
+        catch (SQLException e) {
+            System.err.println(e.toString());
+        }
+        
+        return p;
+        
+    }
 
     public static void main(String args[]) {
         
         Database db = new Database();
-        Badge b = db.getBadge("021890C0");
+        Punch b = db.getPunch("93");
         System.out.println(b);
         
     }
-    
 }

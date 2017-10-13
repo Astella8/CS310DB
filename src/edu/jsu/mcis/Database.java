@@ -1,7 +1,7 @@
 package edu.jsu.mcis;
 
 import java.sql.*;  
-import java.util.*;
+
 
 public class Database {
     
@@ -13,7 +13,7 @@ public class Database {
         
             Class.forName("com.mysql.jdbc.Driver").newInstance();  
             String u = "root";
-            String p = "root";
+            String p = "norris";
             
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas",u,p);
             
@@ -53,28 +53,23 @@ public class Database {
     public Punch getPunch(String id) {
         
         Punch p = null;
-        Long originalts = null;
-        GregorianCalendar adjustts = null;
+        int adjusted = 0;
         
         try {
             
             Statement stmt = conn.createStatement();
             
-            ResultSet rs = stmt.executeQuery("SELECT * FROM event WHERE id='" + id + "'");
-            
-            while(rs.next()) {
-                int shiftId = rs.getInt(5);
-                String badgeId = rs.getString(3);
-                // Punch Description
-                int terminalId = rs.getInt(2);
-                long orginalts = rs.getLong(4);
-                long adjustedts = 0;
-                
-        
-                p = new Punch(terminalId, badgeId, shiftId, adjustedts);
-                System.out.println("#" + badgeId + "CLOCKED IN:"  + adjustedts);
-            }
-
+            ResultSet rs = stmt.executeQuery("SELECT UNIX_TIMESTAMP(originaltimestamp),terminalid,eventtypeid,badgeid FROM event WHERE id='" + id + "'");
+                while(rs.next()) {
+                    int original = rs.getInt(1);
+                    int shiftId = rs.getInt(3);
+                    String badgeId = rs.getString(4);
+                    // Punch Description
+                    int terminalId = rs.getInt(2);
+                    //Long adjusted = getLong.GregorianCalendar
+                    p = new Punch(terminalId, badgeId, shiftId, original, adjusted);
+                    System.out.println("#" + badgeId + "CLOCKED IN:"  + adjusted);
+                }
         }
         
         catch (SQLException e) {
@@ -84,27 +79,12 @@ public class Database {
         return p;
         
     }
-}
-    /*
-    public Shift getShift(){
-        Shift s = null;
-        try{
-            Statement stmt = conn.createStatement();
-            
-            ResultSet rs = stmt.executeQuery("SELCET * FROM shift WHERE id='" + id + "'");
-            
-            while(rs.next()) {
-                
-            }
-        }
-    }
 
     public static void main(String args[]) {
         
         Database db = new Database();
-        Punch b = db.getPunch("93");
-        System.out.println(b);
+        Punch p = db.getPunch("93");
+        System.out.println(p);
         
     }
 }
-*/

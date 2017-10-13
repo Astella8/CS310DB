@@ -12,7 +12,7 @@ package edu.jsu.mcis;
  */
 public class Shift {
     
-    private int shiftId;
+    private String shiftId;
     private String shiftDescription;
     private String start;
     private String stop;
@@ -21,13 +21,13 @@ public class Shift {
     private String dock;
     private String lunchStart;
     private String lunchStop;
-    private String lunchDeduct;
-    private String maxTime;
-    private String overtimeThreshold;
+    private int lunchDeduct;
+    private int maxTime;
+    private int overtimeThreshold;
     
 
     public Shift(){
-        shiftId = 0;
+        shiftId = String.valueOf(0);
         shiftDescription ="";
         start = "";
         stop = "";
@@ -36,16 +36,27 @@ public class Shift {
         dock ="";
         lunchStart="";
         lunchStop="";
-        lunchDeduct="";
-        maxTime="";
-        overtimeThreshold ="";
+        lunchDeduct=0;
+        maxTime=0;
+        overtimeThreshold =0;
+    }
+    public Shift(String id, String desc, String start, String stop, String lunchStrt, String lunchEnd, int lunchDeduct, int maxTime) {
+        this.shiftId = id;
+        this.shiftDescription = desc;
+        this.start = start;
+        this.stop = stop;
+        this.lunchStart = lunchStrt;
+        this.lunchStop = lunchEnd;
+        this.lunchDeduct = lunchDeduct;
+        this.maxTime = maxTime;
+        
     }
     
-      public int getShiftId(){
+      public String getShiftId(){
         return shiftId;
         
         }
-       public void setShiftId(int shiftId){
+       public void setShiftId(String shiftId){
            this.shiftId = shiftId;
        }
        
@@ -111,27 +122,27 @@ public class Shift {
            this.lunchStop = lunchStop;
        }
         
-       public String getLunchDeduct(){
+       public int getLunchDeduct(){
            return lunchDeduct;
        }
        
-       public void setLunchDeduct(String lunchDeduct){
+       public void setLunchDeduct(int lunchDeduct){
            this.lunchDeduct = lunchDeduct;
        }
        
-       public String getMaxTime(){
+       public int getMaxTime(){
            return maxTime;
        }
        
-       public void setMaxTime(String maxTime){
+       public void setMaxTime(int maxTime){
            this.maxTime = maxTime;
        }
        
-       public String getOvertimeThreshold(){
+       public int getOvertimeThreshold(){
            return overtimeThreshold;
        }
        
-       public void setOvertimeThreshold(String overtimeThreshold){
+       public void setOvertimeThreshold(int overtimeThreshold){
            this.overtimeThreshold = overtimeThreshold;
        }
 }

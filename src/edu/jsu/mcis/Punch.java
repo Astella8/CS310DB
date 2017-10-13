@@ -36,6 +36,7 @@ public class Punch {
    }
    public void setPunchId(String punchId){
        this.punchId = punchId;
+       
    }
    public String getBadgeId(){
        return badgeId;
@@ -46,10 +47,7 @@ public class Punch {
    public int getShiftId(){
        return shiftId;
    }
-    public GregorianCalendar getOriginal(){
-       return original;
-   }
-    public GregorianCalendar getAdjusted(){
+    public GregorianCalendar getAdjustedTimeStamp(){
        return adjusted;
    }
 	

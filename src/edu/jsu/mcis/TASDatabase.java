@@ -13,7 +13,7 @@ public class TASDatabase {
         
             Class.forName("com.mysql.jdbc.Driver").newInstance();  
             String u = "root";
-            String p = "root";
+            String p = "twilight0";
             
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas",u,p);
             
@@ -50,7 +50,7 @@ public class TASDatabase {
         return b;
         
     }
-    public Punch getPunch(String id) {
+    public Punch getPunch(int id) {
         
         Punch p = null;
         int adjusted = 0;
@@ -79,7 +79,11 @@ public class TASDatabase {
         return p;
         
     }
-    public Shift getShift(String id){
+    public Shift getShift(int idd){
+        
+        String id = Integer.toString(idd);
+        
+        
         Shift s = null;
         
         try{
@@ -110,8 +114,8 @@ public class TASDatabase {
 
     public static void main(String args[]) {
         
-        Database db = new Database();
-        Shift s = db.getShift("2");
+        TASDatabase db = new TASDatabase();
+        Shift s = db.getShift(2);
         System.out.println(s);
         
     }

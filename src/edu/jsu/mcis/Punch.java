@@ -13,17 +13,17 @@ public class Punch {
 	private GregorianCalendar adjusted;
 	
 		public Punch(int terminalId, String badgeId, int shiftId, long originalts, long adjustedts){
-			//original = new GregorianCalendar();
+			original = new GregorianCalendar();
 			adjusted = new GregorianCalendar();
                         adjusted.setTimeInMillis(0);
-                        //adjusted.setTimeInMillis(adjustedts);
+                        adjusted.setTimeInMillis(adjustedts);
 			this.terminalId = terminalId;
 			this.badgeId = badgeId;
-			this.shiftId = shiftId;
+			this.shiftId = shiftId;   
+                        
                         
 		}
 		
-		//Add Getters
 
    public String getPunchDescription(){
        return punchDescription;
@@ -47,8 +47,25 @@ public class Punch {
    public int getShiftId(){
        return shiftId;
    }
+   public GregorianCalendar getOriginalTimeStamp(){
+       return adjusted;
+   }
     public GregorianCalendar getAdjustedTimeStamp(){
        return adjusted;
    }
+    
+   public String printOriginalTimestamp(){
+       if(shiftId == 1){
+           String Status = "CLOCKED IN: ";
+       }
+       else if(shiftId == 0){
+           String Status = "CLOCKED OUT: ";
+       }
+       else{
+           String Status = "TIMED OUT: ";
+       }
+       return original.toString();
+   }
+   
 	
 }

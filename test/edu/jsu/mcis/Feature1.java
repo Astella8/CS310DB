@@ -69,7 +69,7 @@ public class Feature1 {
 		
 		/* Retrieve Shift Rulesets from Database */
 
-		Shift s1 = db.getShift(1);
+Shift s1 = db.getShift(1);
         Shift s2 = db.getShift(2);
         Shift s3 = db.getShift(3);
 		

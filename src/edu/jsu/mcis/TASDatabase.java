@@ -13,7 +13,7 @@ public class TASDatabase {
         
             Class.forName("com.mysql.jdbc.Driver").newInstance();  
             String u = "root";
-            String p = "twilight0";
+            String p = "norris";
             
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas",u,p);
             
@@ -68,7 +68,7 @@ public class TASDatabase {
                     int terminalId = rs.getInt(2);
                     //Long adjusted = getLong.GregorianCalendar
                     p = new Punch(terminalId, badgeId, shiftId, original, adjusted);
-                    System.out.println("#" + badgeId + "CLOCKED IN:"  + adjusted);
+                    
                 }
         }
         
@@ -113,10 +113,7 @@ public class TASDatabase {
     }
 
     public static void main(String args[]) {
-        
         TASDatabase db = new TASDatabase();
         Shift s = db.getShift(2);
-        System.out.println(s);
-        
     }
 }

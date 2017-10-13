@@ -1,6 +1,7 @@
 package edu.jsu.mcis;
 
 import java.util.*;
+import java.text.SimpleDateFormat;
 
 public class Punch {
 	
@@ -11,15 +12,22 @@ public class Punch {
 	private int terminalId;
 	private GregorianCalendar original;
 	private GregorianCalendar adjusted;
+        private String sdf;
 	
 		public Punch(int terminalId, String badgeId, int shiftId, long originalts, long adjustedts){
 			original = new GregorianCalendar();
 			adjusted = new GregorianCalendar();
-                        adjusted.setTimeInMillis(0);
+                        originalts = (originalts * 1000);
+                        adjustedts = (originalts * 1000);
+                        original.setTimeInMillis(originalts);
                         adjusted.setTimeInMillis(adjustedts);
 			this.terminalId = terminalId;
 			this.badgeId = badgeId;
 			this.shiftId = shiftId;   
+                        //String testdate =  format.format(adjusted.getTime());
+                        sdf = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(original.getTime()).toUpperCase();
+                        
+
                         
                         
 		}
@@ -53,18 +61,19 @@ public class Punch {
     public GregorianCalendar getAdjustedTimeStamp(){
        return adjusted;
    }
-    
+   
    public String printOriginalTimestamp(){
+       String Status = "";
        if(shiftId == 1){
-           String Status = "CLOCKED IN: ";
+           Status = " CLOCKED IN: ";
        }
        else if(shiftId == 0){
-           String Status = "CLOCKED OUT: ";
+           Status = " CLOCKED OUT: ";
        }
        else{
-           String Status = "TIMED OUT: ";
+           Status = " TIMED OUT: ";
        }
-       return original.toString();
+       return "#" + badgeId + Status + sdf;
    }
    
 	

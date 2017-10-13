@@ -18,8 +18,6 @@ public class Punch {
 			adjusted = new GregorianCalendar();
                         original.setTimeInMillis(originalts);
                         adjusted.setTimeInMillis(adjustedts);
-                        System.out.println(original);
-                        System.out.println(adjusted);
 			this.terminalId = terminalId;
 			this.badgeId = badgeId;
 			this.shiftId = shiftId;

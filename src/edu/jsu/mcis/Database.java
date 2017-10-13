@@ -1,7 +1,7 @@
 package edu.jsu.mcis;
 
 import java.sql.*;  
-
+import java.util.*;
 
 public class Database {
     
@@ -53,6 +53,8 @@ public class Database {
     public Punch getPunch(String id) {
         
         Punch p = null;
+        GregorianCalendar originalts = null;
+        GregorianCalendar adjustts = null;
         
         try {
             
@@ -65,10 +67,7 @@ public class Database {
                 String badgeId = rs.getString(3);
                 // Punch Description
                 int terminalId = rs.getInt(2);
-                Long orginalts = rs.getLong(4);
-                Long adjustedts = null;
-                String originalts = null;
-                
+                long orginalts = rs.getLong(4);
                 
         
                 p = new Punch(terminalId, badgeId, shiftId, originalts, adjustedts);
@@ -83,6 +82,18 @@ public class Database {
         
         return p;
         
+    }
+    public Shift getShift(){
+        Shift s = null;
+        try{
+            Statement stmt = conn.createStatement();
+            
+            ResultSet rs = stmt.executeQuery("SELCET * FROM shift WHERE id='" + id + "'");
+            
+            while(rs.next()) {
+                
+            }
+        }
     }
 
     public static void main(String args[]) {

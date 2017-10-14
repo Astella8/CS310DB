@@ -20,7 +20,7 @@ public class Punch {
                         originalts = (originalts * 1000);
                         adjustedts = (originalts * 1000);
                         original.setTimeInMillis(originalts);
-                        adjusted.setTimeInMillis(adjustedts);
+                    adjusted.setTimeInMillis(adjustedts);
 			this.terminalId = terminalId;
 			this.badgeId = badgeId;
 			this.shiftId = shiftId;   

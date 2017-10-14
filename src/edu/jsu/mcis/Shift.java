@@ -43,10 +43,10 @@ public class Shift {
     public Shift(String id, String desc, String start, String stop, String lunchStrt, String lunchEnd, int lunchDeduct, int maxTime) {
         this.shiftId = id;
         this.shiftDescription = desc;
-        this.start = start;
-        this.stop = stop;
-        this.lunchStart = lunchStrt;
-        this.lunchStop = lunchEnd;
+        this.start = start.substring(0, 5);
+        this.stop = stop.substring(0,5);
+        this.lunchStart = lunchStrt.substring(0,5);
+        this.lunchStop = lunchEnd.substring(0,5);
         this.lunchDeduct = lunchDeduct;
         this.maxTime = maxTime;
         
@@ -144,5 +144,10 @@ public class Shift {
        
        public void setOvertimeThreshold(int overtimeThreshold){
            this.overtimeThreshold = overtimeThreshold;
+       }
+       public String toString(){
+        String Help;
+        Help = (shiftDescription + ": " + start + " - "+ stop + " (510 minutes); Lunch: " + lunchStart + " - " + lunchStop + " (30 minutes)");
+        return Help;
        }
 }

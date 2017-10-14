@@ -13,7 +13,7 @@ public class TASDatabase {
         
             Class.forName("com.mysql.jdbc.Driver").newInstance();  
             String u = "root";
-            String p = "norris";
+            String p = "root";
             
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas",u,p);
             
@@ -101,8 +101,6 @@ public class TASDatabase {
                 int maxtime = rs.getInt(11);
                 
                 s = new Shift(id, desc, start, end, lunchstrt, lunchend, lunchdeduct, maxtime);
-                System.out.println(desc + ": " + start + " - "+ end + " ("+ String.valueOf(maxtime - lunchdeduct) +
-                        " minutes); Lunch: " + lunchstrt + " - " + lunchend + " (30 minutes)");
             }
         }
         
@@ -114,6 +112,7 @@ public class TASDatabase {
 
     public static void main(String args[]) {
         TASDatabase db = new TASDatabase();
-        Shift s = db.getShift(2);
+        Shift s = db.getShift(1);
+        System.out.println(s);
     }
 }

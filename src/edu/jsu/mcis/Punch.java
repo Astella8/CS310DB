@@ -13,8 +13,9 @@ public class Punch {
     private GregorianCalendar original;
     private GregorianCalendar adjusted;
     private String sdf;
+    private int eventtypeid;
 
-    public Punch(int terminalId, String badgeId, int shiftId, long originalts, long adjustedts) {
+    public Punch(int terminalId, String badgeId, int shiftId, long originalts, long adjustedts, int eventtypeid) {
         original = new GregorianCalendar();
         adjusted = new GregorianCalendar();
         originalts = (originalts * 1000);
@@ -24,6 +25,7 @@ public class Punch {
         this.terminalId = terminalId;
         this.badgeId = badgeId;
         this.shiftId = shiftId;
+        this.eventtypeid = eventtypeid;
         //String testdate =  format.format(adjusted.getTime());
         sdf = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(original.getTime()).toUpperCase();
     }
@@ -64,12 +66,16 @@ public class Punch {
     public GregorianCalendar getAdjustedTimeStamp() {
         return adjusted;
     }
+    
+    public int geteventtypeid(){
+        return eventtypeid;
+    }
 
     public String printOriginalTimestamp() {
         String Status = "";
-        if (shiftId == 1) {
+        if (eventtypeid == 1) {
             Status = " CLOCKED IN: ";
-        } else if (shiftId == 0) {
+        } else if (eventtypeid == 0) {
             Status = " CLOCKED OUT: ";
         } else {
             Status = " TIMED OUT: ";

@@ -62,12 +62,12 @@ public class TASDatabase {
             ResultSet rs = stmt.executeQuery("SELECT UNIX_TIMESTAMP(originaltimestamp),terminalid,eventtypeid,badgeid FROM event WHERE id='" + id + "'");
                 while(rs.next()) {
                     int original = rs.getInt(1);
-                    int shiftId = rs.getInt(3);
-                    String badgeId = rs.getString(4);
-                    // Punch Description
                     int terminalId = rs.getInt(2);
+                    int shiftId = rs.getInt(3);
+                    int eventTypeId = rs.getInt(3);
+                    String badgeId = rs.getString(4);
                     //Long adjusted = getLong.GregorianCalendar
-                    p = new Punch(terminalId, badgeId, shiftId, original, adjusted);
+                    p = new Punch(terminalId, badgeId, shiftId, original, adjusted, eventTypeId);
                     
                 }
         }

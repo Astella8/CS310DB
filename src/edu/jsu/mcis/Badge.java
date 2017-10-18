@@ -1,11 +1,5 @@
 package edu.jsu.mcis;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author Ayste
@@ -14,36 +8,60 @@ public class Badge {
     private String badgeId;
     private String description;
     
+    /**
+     * Creates Badge object
+     */
     public Badge() {
         badgeId= "";
         description= "";
     }
     
+    /**
+     *
+     * @param badgeid
+     * @param desc
+     */
     public Badge(String badgeid, String desc) {
         this.badgeId = badgeid;
         this.description = desc;
     }
     
+    /**
+     *
+     * @return badgeId
+     */
     public String getBadgeId(){
         return badgeId;
         
     }
-   public String getDescription(){
+
+    /**
+     *
+     * @return Description
+     */
+    public String getDescription(){
        return description;
    }
    
-   public void setBadgeId(String badgeId){
+    /**
+     *
+     * @param badgeId
+     */
+    public void setBadgeId(String badgeId){
        this.badgeId = badgeId;
    }
-   public void setDescription(String description){
+
+    /**
+     *
+     * @param description
+     */
+    public void setDescription(String description){
        this.description = description;
    }
    
+    @Override
    public String toString() {
        return ("#" + badgeId + " (" + description + ")");
    }
     
  }
-
-    
-

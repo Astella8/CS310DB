@@ -3,6 +3,10 @@ package edu.jsu.mcis;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
+/**
+ *
+ * @author Braden
+ */
 public class Punch {
 
     private int shiftId;
@@ -15,6 +19,15 @@ public class Punch {
     private String sdf;
     private int eventtypeid;
 
+    /**
+     *
+     * @param terminalId
+     * @param badgeId
+     * @param shiftId
+     * @param originalts
+     * @param adjustedts
+     * @param eventtypeid
+     */
     public Punch(int terminalId, String badgeId, int shiftId, long originalts, long adjustedts, int eventtypeid) {
         original = new GregorianCalendar();
         adjusted = new GregorianCalendar();
@@ -30,47 +43,91 @@ public class Punch {
         sdf = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(original.getTime()).toUpperCase();
     }
 
+    /**
+     *
+     * @return punchDescription
+     */
     public String getPunchDescription() {
         return punchDescription;
     }
 
+    /**
+     *
+     * @param punchDescription
+     */
     public void setDescription(String punchDescription) {
         this.punchDescription = punchDescription;
     }
 
+    /**
+     *
+     * @return punchId
+     */
     public String getPunchId() {
         return punchId;
     }
 
+    /**
+     *
+     * @param punchId
+     */
     public void setPunchId(String punchId) {
         this.punchId = punchId;
 
     }
 
+    /**
+     *
+     * @return badgeId
+     */
     public String getBadgeId() {
         return badgeId;
     }
 
+    /**
+     *
+     * @return terminalId
+     */
     public int getTerminalId() {
         return terminalId;
     }
 
+    /**
+     *
+     * @return shiftId
+     */
     public int getShiftId() {
         return shiftId;
     }
 
+    /**
+     *
+     * @return original
+     */
     public GregorianCalendar getOriginalTimeStamp() {
         return adjusted;
     }
 
+    /**
+     *
+     * @return adjusted
+     */
     public GregorianCalendar getAdjustedTimeStamp() {
         return adjusted;
     }
     
+    /**
+     *
+     * @return eventtypeid
+     */
     public int geteventtypeid(){
         return eventtypeid;
     }
 
+    /**
+     *
+     * @return String to output onto screen
+     */
     public String printOriginalTimestamp() {
         String Status = "";
         if (eventtypeid == 1) {

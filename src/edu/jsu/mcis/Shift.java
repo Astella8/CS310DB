@@ -1,10 +1,5 @@
 package edu.jsu.mcis;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
@@ -18,14 +13,16 @@ public class Shift {
     private String stop;
     private String interval;
     private String gracePeriod;
-    private String dock;
+    private String dockTime;
     private String lunchStart;
     private String lunchStop;
     private int lunchDeduct;
     private int maxTime;
     private int overtimeThreshold;
     
-
+    /**
+     * Creates Shift object
+     */
     public Shift(){
         shiftId = String.valueOf(0);
         shiftDescription ="";
@@ -33,13 +30,22 @@ public class Shift {
         stop = "";
         interval = "";
         gracePeriod ="";
-        dock ="";
-        lunchStart="";
-        lunchStop="";
-        lunchDeduct=0;
+        dockTime = "";
         maxTime=0;
         overtimeThreshold =0;
     }
+
+    /**
+     *
+     * @param id
+     * @param desc
+     * @param start
+     * @param stop
+     * @param lunchStrt
+     * @param lunchEnd
+     * @param lunchDeduct
+     * @param maxTime
+     */
     public Shift(String id, String desc, String start, String stop, String lunchStrt, String lunchEnd, int lunchDeduct, int maxTime) {
         this.shiftId = id;
         this.shiftDescription = desc;
@@ -52,102 +58,207 @@ public class Shift {
         
     }
     
-      public String getShiftId(){
+    /**
+     *
+     * @return
+     */
+    public String getShiftId(){
         return shiftId;
         
         }
-       public void setShiftId(String shiftId){
+
+    /**
+     *
+     * @param shiftId
+     */
+    public void setShiftId(String shiftId){
            this.shiftId = shiftId;
        }
        
-       public String getShiftDescription(){
+    /**
+     *
+     * @return
+     */
+    public String getShiftDescription(){
            return shiftDescription;
        }
        
-       public void setShiftDescription(String shiftDescription){
+    /**
+     *
+     * @param shiftDescription
+     */
+    public void setShiftDescription(String shiftDescription){
            this.shiftDescription = shiftDescription;
        }
-       public String getStart(){
+
+    /**
+     *
+     * @return
+     */
+    public String getStart(){
         return start;
         
         }
-       public void setStart(String start){
+
+    /**
+     *
+     * @param start
+     */
+    public void setStart(String start){
            this.start = start;
        }
        
-       public String getStop(){
+    /**
+     *
+     * @return
+     */
+    public String getStop(){
            return stop;
        }
        
-       public void setStop(String stop){
+    /**
+     *
+     * @param stop
+     */
+    public void setStop(String stop){
            this.stop = stop;
        }
-        public String getInterval(){
+
+    /**
+     *
+     * @return
+     */
+    public String getInterval(){
            return interval;
        }
        
-       public void setInterval(String interval){
+    /**
+     *
+     * @param interval
+     */
+    public void setInterval(String interval){
            this.interval = interval;
        }
        
-       public String getGracePeriod(){
+    /**
+     *
+     * @return gracePeriod
+     */
+    public String getGracePeriod(){
            return gracePeriod;
        }
        
-       public void setGracePeriod(String gracePeriod){
+    /**
+     *
+     * @param gracePeriod
+     */
+    public void setGracePeriod(String gracePeriod){
            this.gracePeriod = gracePeriod;
        }
        
-        public String getDock(){
-           return dock;
+    /**
+     *
+     * @return dockTime
+     */
+    public String getDockTime(){
+           return dockTime;
        }
        
-       public void setDock(String dock){
-           this.dock = dock;
+    /**
+     *
+     * @param dockTime
+     */
+    public void setDockTime(String dockTime){
+           this.dockTime = dockTime;
        }
         
-       public String getLunchStart(){
+    /**
+     *
+     * @return lunchStart
+     */
+    public String getLunchStart(){
            return lunchStart;
        }
        
-       public void setLunchStart(String lunchStart){
+    /**
+     *
+     * @param lunchStart
+     */
+    public void setLunchStart(String lunchStart){
            this.lunchStart = lunchStart;
        }
        
-        public String getLunchStop(){
+    /**
+     *
+     * @return lunchStop
+     */
+    public String getLunchStop(){
            return lunchStop;
        }
        
-       public void setLunchStop(String lunchStop){
+    /**
+     *
+     * @param lunchStop
+     */
+    public void setLunchStop(String lunchStop){
            this.lunchStop = lunchStop;
        }
         
-       public int getLunchDeduct(){
+    /**
+     *
+     * @return lunchDeduct
+     */
+    public int getLunchDeduct(){
            return lunchDeduct;
        }
        
-       public void setLunchDeduct(int lunchDeduct){
+    /**
+     *
+     * @param lunchDeduct
+     */
+    public void setLunchDeduct(int lunchDeduct){
            this.lunchDeduct = lunchDeduct;
        }
        
-       public int getMaxTime(){
+    /**
+     *
+     * @return maxTime
+     */
+    public int getMaxTime(){
            return maxTime;
        }
        
-       public void setMaxTime(int maxTime){
+    /**
+     *
+     * @param maxTime
+     */
+    public void setMaxTime(int maxTime){
            this.maxTime = maxTime;
        }
        
-       public int getOvertimeThreshold(){
+    /**
+     *
+     * @return overtimeThreshold
+     */
+    public int getOvertimeThreshold(){
            return overtimeThreshold;
        }
        
-       public void setOvertimeThreshold(int overtimeThreshold){
+    /**
+     *
+     * @param overtimeThreshold
+     */
+    public void setOvertimeThreshold(int overtimeThreshold){
            this.overtimeThreshold = overtimeThreshold;
        }
-       public String toString(){
-        String Help;
-        Help = (shiftDescription + ": " + start + " - "+ stop + " (510 minutes); Lunch: " + lunchStart + " - " + lunchStop + " (30 minutes)");
-        return Help;
+    /**
+     * 
+     * @return finalString 
+     */
+    @Override
+    public String toString(){
+        String finalString;
+        finalString = (shiftDescription + ": " + start + " - "+ stop + " (510 minutes); Lunch: " + lunchStart + " - " + lunchStop + " (30 minutes)");
+        return finalString;
        }
 }

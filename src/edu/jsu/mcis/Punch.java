@@ -18,7 +18,7 @@ public class Punch {
     private GregorianCalendar adjusted;
     private String sdf;
     private int eventtypeid;
-    private int punchTypeId;
+    private int punchtypeid;
 
     /**
      *
@@ -43,19 +43,20 @@ public class Punch {
         //String testdate =  format.format(adjusted.getTime());
         sdf = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(original.getTime()).toUpperCase();
     }
-    
-      public Punch(String badgeId, int terminalId, int punchTypeId){
+
+    public Punch(String badgeid, int terminalid, int punchtypeid){
+        this.badgeid = badgeid;
+        this.terminalid = terminalid;
+        this.punchtypeid = 0;
+        Date originalts = new Date();
+        Date adjustedts = new Date();
+        dc.setTimeinMillis(x);
+        
+        
+        
         
     }
     
-    public int getPunchTypeId(){
-        return punchTypeId;
-    }
-    
-    public void setPunchTypeId(int punchTypeId){
-        this.punchTypeId = punchTypeId;
-    }
-
     /**
      *
      * @return punchDescription

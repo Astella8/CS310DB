@@ -45,12 +45,11 @@ public class Punch {
     }
 
     public Punch(String badgeid, int terminalid, int punchtypeid){
-        this.badgeid = badgeid;
-        this.terminalid = terminalid;
+        this.badgeId = badgeId;
+        this.terminalId = terminalId;
         this.punchtypeid = 0;
-        Date originalts = new Date();
-        Date adjustedts = new Date();
-        dc.setTimeinMillis(x);
+        original = new GregorianCalendar();
+        adjusted = new GregorianCalendar();
         
         
         

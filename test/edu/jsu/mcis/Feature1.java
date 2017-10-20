@@ -5,15 +5,25 @@ import edu.jsu.mcis.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author brand
+ */
 public class Feature1 {
 
     private TASDatabase db;
     
+    /**
+     *
+     */
     @Before
     public void setup() {
         db = new TASDatabase();
     }
     
+    /**
+     *
+     */
     @Test
     public void testGetBadges() {
 		
@@ -31,6 +41,9 @@ public class Feature1 {
         
     }
     
+    /**
+     *
+     */
     @Test
     public void testGetPunches() {
 		
@@ -64,6 +77,9 @@ public class Feature1 {
         
     }
     
+    /**
+     *
+     */
     @Test
     public void testGetShift() {
 		

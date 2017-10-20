@@ -44,7 +44,7 @@ public class Punch {
         sdf = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(original.getTime()).toUpperCase();
     }
 
-    public Punch(String badgeid, int terminalid, int punchtypeid){
+    public Punch(String badgeId, int terminalId, int punchTypeId){
         this.badgeId = badgeId;
         this.terminalId = terminalId;
         this.punchtypeid = 0;
@@ -55,6 +55,11 @@ public class Punch {
         
         
     }
+    /**
+     * @param punchTypeId
+     */
+    public int getPunchtypeid(){
+} 
     
     /**
      *
@@ -117,8 +122,8 @@ public class Punch {
      *
      * @return original
      */
-    public GregorianCalendar getOriginalTimeStamp() {
-        return adjusted;
+    public GregorianCalendar getOriginaltimestamp() {
+        return original;
     }
 
     /**

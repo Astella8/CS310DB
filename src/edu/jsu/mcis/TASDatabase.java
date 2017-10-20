@@ -1,14 +1,17 @@
 package edu.jsu.mcis;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The TASDatabase class connects to the mySQL database and gets necessary data
  * from the specified table.
  *
- * @author Brandon
+ * @author EveryONE!!!!!
  */
-
 public class TASDatabase {
 
     Connection conn;
@@ -22,7 +25,7 @@ public class TASDatabase {
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String u = "root";
-            String p = "norris";
+            String p = "root";
 
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas", u, p);
 
@@ -35,6 +38,7 @@ public class TASDatabase {
     /**
      * Executes query needed to select badgeID, description And creates a new
      * badge object with those parameters
+     *
      * @param id of the badge needed from SQL
      * @return the created Badge object
      */
@@ -65,9 +69,11 @@ public class TASDatabase {
     /**
      * Executes Query needed to select multiple variables from the table event.
      * And creates a Punch object with said variables.
+     *
      * @param id of the punch needed from SQL
      * @return the create Punch object.
      */
+    public 
     public Punch getPunch(int id) {
 
         Punch p = null;
@@ -98,6 +104,7 @@ public class TASDatabase {
     /**
      * Executes Query needed to select multiple variables from the shift table.
      * Creates a Shift object with those variables.
+     *
      * @param id of the punch needed from SQL
      * @return the created Shift object
      */
@@ -127,9 +134,48 @@ public class TASDatabase {
         }
         return s;
     }
+
+    /**
+     * Insert punch object into database
+     *
+     * @param event
+     * @return ID created in database
+     */
+    public int insertPunch(Punch event) {
+        int key = 0;
+        try {
+            int id = 0;    
+            int result = 0;
+            Punch p = null;
+            String badgeId = null;
+            int terminalId = 0;
+            int punchTypeId = 0;
+            GregorianCalendar originalTimestamp = null;
+            originalTimestamp = new GregorianCalendar();
+            Statement stmt = conn.createStatement();
+            ResultSet keys;
+            String sql = "INSERT INTO event (badgeid, originaltimestamp, terminalid, eventtypeid) VALUES (?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, badgeId);
+            ps.setString(2, (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(originalTimestamp.getTime()));
+            ps.setInt(3, 101);
+            ps.setInt(4, 1);
+            result = ps.executeUpdate();
+            if (result == 1) {
+                keys = ps.getGeneratedKeys();
+                if (keys.next()) {
+                    key = keys.getInt(1);
+                }
+            }
+        } catch (SQLException ex) {
+        }
+        return key;
+    }
+
     /**
      * Main function creates database connection the runs test.
-     * @param args 
+     *
+     * @param args
      */
     public static void main(String args[]) {
         TASDatabase db = new TASDatabase();

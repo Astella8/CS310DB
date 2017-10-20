@@ -18,7 +18,7 @@ public class Punch {
     private GregorianCalendar adjusted;
     private String sdf;
     private int eventtypeid;
-    private int punchtypeid;
+    private int punchTypeId;
 
     /**
      *
@@ -47,7 +47,7 @@ public class Punch {
     public Punch(String badgeId, int terminalId, int punchTypeId){
         this.badgeId = badgeId;
         this.terminalId = terminalId;
-        this.punchtypeid = 0;
+        this.punchTypeId = 0;
         original = new GregorianCalendar();
         adjusted = new GregorianCalendar();
         
@@ -58,9 +58,10 @@ public class Punch {
     /**
      * @param punchTypeId
      */
-    public int getPunchtypeid(){
-} 
-    
+    public int getPunchTypeId() {
+        return punchTypeId;
+    }
+
     /**
      *
      * @return punchDescription
@@ -157,5 +158,6 @@ public class Punch {
         }
         return "#" + badgeId + Status + sdf;
     }
-
 }
+
+

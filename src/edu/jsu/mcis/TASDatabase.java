@@ -25,7 +25,7 @@ public class TASDatabase {
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String u = "root";
-            String p = "root";
+            String p = "norris";
 
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas", u, p);
 
@@ -73,8 +73,7 @@ public class TASDatabase {
      * @param id of the punch needed from SQL
      * @return the create Punch object.
      */
-    public 
-    public Punch getPunch(int id) {
+     public Punch getPunch(int id) {
 
         Punch p = null;
 

@@ -146,11 +146,10 @@ public class TASDatabase {
             int id = 0;    
             int result = 0;
             Punch p = null;
-            String badgeId = null;
-            int terminalId = 0;
-            int punchTypeId = 0;
-            GregorianCalendar originalTimestamp = null;
-            originalTimestamp = new GregorianCalendar();
+            String badgeId = event.getBadgeId();
+            int terminalId = event.getTerminalId();
+            int punchTypeId = event.getPunchTypeId();
+            GregorianCalendar originalTimestamp = event.getOriginaltimestamp();
             Statement stmt = conn.createStatement();
             ResultSet keys;
             String sql = "INSERT INTO event (badgeid, originaltimestamp, terminalid, eventtypeid) VALUES (?,?,?,?)";

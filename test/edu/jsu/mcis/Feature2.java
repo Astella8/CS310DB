@@ -39,10 +39,10 @@ public class Feature2 {
 		
 		/* Compare Punches */
 
-        assertEquals(badgeid, p2.getBadgeid());
+        assertEquals(badgeid, p2.getBadgeId());
         assertEquals(originaltimestamp, (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(p2.getOriginaltimestamp().getTime()));
-        assertEquals(terminalid, p2.getTerminalid());
-        assertEquals(eventtypeid, p2.getPunchtypeid());
+        assertEquals(terminalid, p2.getTerminalId());
+        assertEquals(eventtypeid, p2.getPunchTypeId());
         
     }
 

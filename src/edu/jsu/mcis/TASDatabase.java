@@ -25,7 +25,7 @@ public class TASDatabase {
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String u = "root";
-            String p = "norris";
+            String p = "root";
 
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas", u, p);
 
@@ -142,14 +142,13 @@ public class TASDatabase {
      */
     public int insertPunch(Punch event) {
         int key = 0;
-        try {
-            int id = 0;    
-            int result = 0;
+        try {    
+            int result;
             Punch p = null;
-            String badgeId = null;
-            int terminalId = 0;
-            int punchTypeId = 0;
-            GregorianCalendar originalTimestamp = null;
+            String badgeId = event.getBadgeId();
+            int terminalId = event.getTerminalId();
+            int punchTypeId = event.getPunchTypeId();
+            GregorianCalendar originalTimestamp = event.getOriginaltimestamp();
             originalTimestamp = new GregorianCalendar();
             Statement stmt = conn.createStatement();
             ResultSet keys;

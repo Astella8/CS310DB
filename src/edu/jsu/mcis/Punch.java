@@ -19,6 +19,7 @@ public class Punch {
     private String sdf;
     private int eventtypeid;
     private int punchTypeId;
+    private int timestamp;
 
     /**
      *
@@ -51,10 +52,19 @@ public class Punch {
         original = new GregorianCalendar();
         adjusted = new GregorianCalendar();
         
-        
-        
-        
     }
+    
+    public GregorianCalendar adjust(long originalts, long adjustedts){
+    adjusted = new GregorianCalendar();
+    adjustedts = (originalts * 1000);
+    adjusted.setTimeInMillis(adjustedts);
+        
+    
+    
+    return adjusted;
+    }
+    
+    
     /**
      * @param punchTypeId
      */
@@ -158,6 +168,14 @@ public class Punch {
         }
         return "#" + badgeId + Status + sdf;
     }
+    
+    public String printAdjustedTimestamp(){
+        
+        
+        return null;
+    }
+    
+    
 }
 
 

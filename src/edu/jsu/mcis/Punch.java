@@ -54,14 +54,16 @@ public class Punch {
         
     }
     
-    public GregorianCalendar adjust(long originalts, long adjustedts){
-    adjusted = new GregorianCalendar();
-    adjustedts = (originalts * 1000);
-    adjusted.setTimeInMillis(adjustedts);
+    public GregorianCalendar adjust(Shift shift){
+        TASDatabase.getPunch();
+        int interval = 15;
+        int gracePeriod = 5;
+        int dock = 15;
+        int lunchDeduct = 360;
         
-    
-    
-    return adjusted;
+        
+        
+        return adjusted;
     }
     
     

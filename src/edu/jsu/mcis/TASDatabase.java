@@ -25,7 +25,7 @@ public class TASDatabase {
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String u = "root";
-            String p = "root";
+            String p = "norris";
 
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas", u, p);
 
@@ -73,7 +73,7 @@ public class TASDatabase {
      * @param id of the punch needed from SQL
      * @return the create Punch object.
      */
-     public Punch getPunch(int id) {
+    public Punch getPunch(int id) {
 
         Punch p = null;
 
@@ -142,7 +142,7 @@ public class TASDatabase {
      */
     public int insertPunch(Punch event) {
         int key = 0;
-        try {    
+        try {
             int result;
             Punch p = null;
             String badgeId = event.getBadgeId();
@@ -168,6 +168,24 @@ public class TASDatabase {
         } catch (SQLException ex) {
         }
         return key;
+    }
+
+    int getShiftId(String id) {
+        try {
+            Statement stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM employee WHERE badgeid='" + id + "'");
+
+            while (rs.next()) {
+                int shiftId = rs.getInt(7);
+                return shiftId;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TASDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+
     }
 
     /**

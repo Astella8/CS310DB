@@ -43,6 +43,22 @@ public class Punch {
         this.eventtypeid = eventtypeid;
         //String testdate =  format.format(adjusted.getTime());
         sdf = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(original.getTime()).toUpperCase();
+        GregorianCalendar gc = new GregorianCalendar(2017,9,25,7,0);
+        GregorianCalendar graceIn = new GregorianCalendar();
+        graceIn.setTimeInMillis(gc.getTimeInMillis());
+        graceIn.roll(Calendar.MINUTE, 5);
+        GregorianCalendar dockIn = new GregorianCalendar();
+        dockIn.setTimeInMillis(gc.getTimeInMillis());
+        dockIn.roll(Calendar.MINUTE, 15);
+        GregorianCalendar graceOut = new GregorianCalendar();
+        graceOut.setTimeInMillis(gc.getTimeInMillis());
+        graceOut.roll(Calendar.MINUTE, -5);
+        GregorianCalendar dockOut = new GregorianCalendar();
+        dockOut.setTimeInMillis(gc.getTimeInMillis());
+        dockOut.roll(Calendar.MINUTE, -15);
+        //Lunch Start and Stop not set to times yet
+        GregorianCalendar lunchStart = new GregorianCalendar();
+        GregorianCalendar lunchStop = new GregorianCalendar();
     }
 
     public Punch(String badgeId, int terminalId, int punchTypeId){
@@ -55,7 +71,7 @@ public class Punch {
     }
     
     public GregorianCalendar adjust(Shift shift){
-        TASDatabase.getPunch();
+        //TASDatabase.getPunch();
         int interval = 15;
         int gracePeriod = 5;
         int dock = 15;
@@ -176,8 +192,8 @@ public class Punch {
         
         return null;
     }
-    
-    
+
+
 }
 
 

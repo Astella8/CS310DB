@@ -169,12 +169,27 @@ public class TASDatabase {
         }
         return key;
     }
+    public int updateQuery(int id, string parameter){
+        Statement stmt = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ResultSet generatedKeys = null;
+        String query, update;
+        int result=0, key=0;
+        try{
+            stmt=connection.createStatement();
+            update="update people set firstname=? where id=?";        
+        }
+        
+        
+    }
 
-    int getShiftId(String id) {
+    int getClockTimes(String id) {
         try {
+            
             Statement stmt = conn.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT * FROM employee WHERE badgeid='" + id + "'");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM event WHERE eventtypeid='" + id + "'");
 
             while (rs.next()) {
                 int shiftId = rs.getInt(7);
@@ -197,5 +212,5 @@ public class TASDatabase {
         TASDatabase db = new TASDatabase();
         Shift s = db.getShift(1);
         System.out.println(s);
-      }
+    }
 }

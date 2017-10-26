@@ -59,6 +59,7 @@ public class Punch {
         //Lunch Start and Stop not set to times yet
         GregorianCalendar lunchStart = new GregorianCalendar();
         GregorianCalendar lunchStop = new GregorianCalendar();
+        
     }
 
     public Punch(String badgeId, int terminalId, int punchTypeId){
@@ -71,11 +72,8 @@ public class Punch {
     }
     
     public GregorianCalendar adjust(Shift shift){
-        //TASDatabase.getPunch();
-        int interval = 15;
-        int gracePeriod = 5;
-        int dock = 15;
-        int lunchDeduct = 360;
+       TASDatabase.getClockTimes(shift);
+       if(original > ()
         
         
         

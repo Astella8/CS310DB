@@ -7,7 +7,7 @@ package edu.jsu.mcis;
  */
 public class Shift {
     
-    private String shiftId;
+    private int shiftId;
     private String shiftDescription;
     private String start;
     private String stop;
@@ -24,7 +24,7 @@ public class Shift {
      * Creates Shift object
      */
     public Shift(){
-        shiftId = String.valueOf(0);
+        shiftId = 0;
         shiftDescription ="";
         start = "";
         stop = "";
@@ -62,7 +62,7 @@ public class Shift {
      *
      * @return
      */
-    public String getShiftId(){
+    public int getShiftId(){
         return shiftId;
         
         }
@@ -71,7 +71,7 @@ public class Shift {
      *
      * @param shiftId
      */
-    public void setShiftId(String shiftId){
+    public void setShiftId(int shiftId){
            this.shiftId = shiftId;
        }
        

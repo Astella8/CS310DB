@@ -60,7 +60,7 @@ public class Punch {
         dockOut.roll(Calendar.MINUTE, -15);
         //Lunch Start and Stop not set to times yet
         GregorianCalendar lunchStart = new GregorianCalendar();
-        GregorianCalendar lunchStop = new GregorianCalendar();84
+        GregorianCalendar lunchStop = new GregorianCalendar();
         
     }
 
@@ -74,21 +74,30 @@ public class Punch {
     }
     
     public GregorianCalendar adjust(Shift shift){
-        String shiftStart = shift.getStart();
-        
-        GregorianCalendar lunchIn = new GregorianCalendar();
-        GregorianCalendar lunchOut = new GregorianCalendar();
-        GregorianCalendar dockIn = new GregorianCalendar();
-        GregorianCalendar dockOut = new GregorianCalendar();
-        GregorianCalendar graceInsa = new GregorianCalendar();
-        GregorianCalendar graceOutsa = new GregorianCalendar();
-        GregorianCalendar graceInso = new GregorianCalendar();
-        GregorianCalendar graceOutso = new GregorianCalendar();
-        GregorianCalendar shiftSa = new GregorianCalendar();
-        GregorianCalendar shiftSo = new GregorianCalendar();
-        
-        lunchIn = shift.getStart();
-    }
+        GregorianCalendar shiftSa = new GregorianCalendar(); //m1
+        GregorianCalendar shiftSo = new GregorianCalendar(); //m2
+        GregorianCalendar intIn = new GregorianCalendar(); //m3
+        GregorianCalendar dockIn = new GregorianCalendar(); //m4
+        GregorianCalendar graceIn = new GregorianCalendar(); //m5
+        GregorianCalendar dockOut = new GregorianCalendar(); //m6
+        GregorianCalendar graceOut = new GregorianCalendar(); //m7
+        GregorianCalendar intOut = new GregorianCalendar(); //m8
+        GregorianCalendar lunchIn = new GregorianCalendar(); //m9
+        GregorianCalendar lunchOut = new GregorianCalendar(); //m10
+        if(original >= intIn) && (original <= shiftSa) {
+        adjusted = shiftSa;
+            }
+        if (original >=ShiftSa) && (original <= dockOut) {
+        adjusted = shiftSa
+            }
+        if(original > graceIn) && (original <= dockIn){
+        adjusted = dockIn;
+            }
+        if (original >= lunchIn) && (original <= lunchOut){
+        adjusted = lunchOut;
+    }       
+        return null;
+  }
     
     
     /**
@@ -203,5 +212,3 @@ public class Punch {
 
 
 }
-
-

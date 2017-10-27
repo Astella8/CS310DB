@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
  * @author Braden
  */
 public class Punch {
+    
+    private TASDatabase db;
 
     private int shiftId;
     private String punchId;
@@ -19,6 +21,7 @@ public class Punch {
     private String sdf;
     private int eventtypeid;
     private int punchTypeId;
+    private int timestamp;
 
     /**
      *
@@ -42,6 +45,23 @@ public class Punch {
         this.eventtypeid = eventtypeid;
         //String testdate =  format.format(adjusted.getTime());
         sdf = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(original.getTime()).toUpperCase();
+        GregorianCalendar gc = new GregorianCalendar(2017,9,25,7,0);
+        GregorianCalendar graceIn = new GregorianCalendar();
+        graceIn.setTimeInMillis(gc.getTimeInMillis());
+        graceIn.roll(Calendar.MINUTE, 5);
+        GregorianCalendar dockIn = new GregorianCalendar();
+        dockIn.setTimeInMillis(gc.getTimeInMillis());
+        dockIn.roll(Calendar.MINUTE, 15);
+        GregorianCalendar graceOut = new GregorianCalendar();
+        graceOut.setTimeInMillis(gc.getTimeInMillis());
+        graceOut.roll(Calendar.MINUTE, -5);
+        GregorianCalendar dockOut = new GregorianCalendar();
+        dockOut.setTimeInMillis(gc.getTimeInMillis());
+        dockOut.roll(Calendar.MINUTE, -15);
+        //Lunch Start and Stop not set to times yet
+        GregorianCalendar lunchStart = new GregorianCalendar();
+        GregorianCalendar lunchStop = new GregorianCalendar();
+        
     }
 
     public Punch(String badgeId, int terminalId, int punchTypeId){
@@ -51,10 +71,28 @@ public class Punch {
         original = new GregorianCalendar();
         adjusted = new GregorianCalendar();
         
-        
-        
-        
     }
+    
+    public GregorianCalendar adjust(Shift shift){
+        GregorianCalendar lunchIn = new GregorianCalendar();
+        GregorianCalendar lunchOut = new GregorianCalendar();
+        GregorianCalendar dockIn = new GregorianCalendar();
+        GregorianCalendar dockOut = new GregorianCalendar();
+        GregorianCalendar graceInsa = new GregorianCalendar();
+        GregorianCalendar graceOutsa = new GregorianCalendar();
+        GregorianCalendar graceInso = new GregorianCalendar();
+        GregorianCalendar graceOutso = new GregorianCalendar();
+        GregorianCalendar shiftSa = new GregorianCalendar();
+        GregorianCalendar shiftSo = new GregorianCalendar();
+        if(original >=m3) && (original <= m1) {
+        adjusted = m1;
+        }
+        if (original >=m1) && (original {
+        
+    }       
+  }
+    
+    
     /**
      * @param punchTypeId
      */
@@ -158,6 +196,14 @@ public class Punch {
         }
         return "#" + badgeId + Status + sdf;
     }
+    
+    public String printAdjustedTimestamp(){
+        
+        
+        return null;
+    }
+
+
 }
 
 

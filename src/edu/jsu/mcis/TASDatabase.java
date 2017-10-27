@@ -73,7 +73,7 @@ public class TASDatabase {
      * @param id of the punch needed from SQL
      * @return the create Punch object.
      */
-     public Punch getPunch(int id) {
+    public Punch getPunch(int id) {
 
         Punch p = null;
 
@@ -117,12 +117,12 @@ public class TASDatabase {
             ResultSet rs = stmt.executeQuery("SELECT * FROM shift WHERE id='" + id + "'");
 
             while (rs.next()) {
-                String shiftId = rs.getString(1);
+                int shiftId = rs.getInt(1);
                 String desc = rs.getString(2);
-                String start = rs.getString(3);
-                String end = rs.getString(4);
-                String lunchstrt = rs.getString(8);
-                String lunchend = rs.getString(9);
+                int start = rs.getInt(3);
+                int end = rs.getInt(4);
+                int lunchstrt = rs.getInt(8);
+                int lunchend = rs.getInt(9);
                 int lunchdeduct = rs.getInt(10);
                 int maxtime = rs.getInt(11);
 
@@ -143,13 +143,13 @@ public class TASDatabase {
     public int insertPunch(Punch event) {
         int key = 0;
         try {
-            int id = 0;    
-            int result = 0;
+            int result;
             Punch p = null;
             String badgeId = event.getBadgeId();
             int terminalId = event.getTerminalId();
             int punchTypeId = event.getPunchTypeId();
             GregorianCalendar originalTimestamp = event.getOriginaltimestamp();
+            originalTimestamp = new GregorianCalendar();
             Statement stmt = conn.createStatement();
             ResultSet keys;
             String sql = "INSERT INTO event (badgeid, originaltimestamp, terminalid, eventtypeid) VALUES (?,?,?,?)";
@@ -168,6 +168,42 @@ public class TASDatabase {
         } catch (SQLException ex) {
         }
         return key;
+    }
+    public int updateQuery(int id, String parameter){
+        Statement stmt = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ResultSet generatedKeys = null;
+        String query, update;
+        int result=0, key=0;
+        try{
+            stmt=conn.createStatement();
+            update="update people set firstname=? where id=?";        
+        } catch (SQLException ex) {
+            Logger.getLogger(TASDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+        
+    }
+    
+
+    public int getClockTimes(String id) {
+        try {
+            
+            Statement stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM event WHERE eventtypeid='" + id + "'");
+
+            while (rs.next()) {
+                int shiftId = rs.getInt(7);
+                return shiftId;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TASDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+
     }
 
     /**

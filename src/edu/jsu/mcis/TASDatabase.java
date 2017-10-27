@@ -181,10 +181,10 @@ public class TASDatabase {
             update="update people set firstname=? where id=?";        
         }
         
-        
     }
+    
 
-    int getClockTimes(String id) {
+    public int getClockTimes(String id) {
         try {
             
             Statement stmt = conn.createStatement();

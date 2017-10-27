@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
  * @author Braden
  */
 public class Punch {
+    
+    private TASDatabase db;
 
     private int shiftId;
     private String punchId;
@@ -58,7 +60,7 @@ public class Punch {
         dockOut.roll(Calendar.MINUTE, -15);
         //Lunch Start and Stop not set to times yet
         GregorianCalendar lunchStart = new GregorianCalendar();
-        GregorianCalendar lunchStop = new GregorianCalendar();
+        GregorianCalendar lunchStop = new GregorianCalendar();84
         
     }
 
@@ -72,12 +74,20 @@ public class Punch {
     }
     
     public GregorianCalendar adjust(Shift shift){
-       TASDatabase.getClockTimes(shift);
-       if(original > ()
+        String shiftStart = shift.getStart();
         
+        GregorianCalendar lunchIn = new GregorianCalendar();
+        GregorianCalendar lunchOut = new GregorianCalendar();
+        GregorianCalendar dockIn = new GregorianCalendar();
+        GregorianCalendar dockOut = new GregorianCalendar();
+        GregorianCalendar graceInsa = new GregorianCalendar();
+        GregorianCalendar graceOutsa = new GregorianCalendar();
+        GregorianCalendar graceInso = new GregorianCalendar();
+        GregorianCalendar graceOutso = new GregorianCalendar();
+        GregorianCalendar shiftSa = new GregorianCalendar();
+        GregorianCalendar shiftSo = new GregorianCalendar();
         
-        
-        return adjusted;
+        lunchIn = shift.getStart();
     }
     
     

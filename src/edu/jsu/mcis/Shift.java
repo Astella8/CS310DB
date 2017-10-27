@@ -9,13 +9,13 @@ public class Shift {
     
     private int shiftId;
     private String shiftDescription;
-    private String start;
-    private String stop;
-    private String interval;
-    private String gracePeriod;
-    private String dockTime;
-    private String lunchStart;
-    private String lunchStop;
+    private int start;
+    private int stop;
+    private int interval;
+    private int gracePeriod;
+    private int dockTime;
+    private int lunchStart;
+    private int lunchStop;
     private int lunchDeduct;
     private int maxTime;
     private int overtimeThreshold;
@@ -26,11 +26,11 @@ public class Shift {
     public Shift(){
         shiftId = 0;
         shiftDescription ="";
-        start = "";
-        stop = "";
-        interval = "";
-        gracePeriod ="";
-        dockTime = "";
+        start = 0;
+        stop = 0;
+        interval = 0;
+        gracePeriod = 0;
+        dockTime = 0;
         maxTime=0;
         overtimeThreshold =0;
     }
@@ -46,13 +46,14 @@ public class Shift {
      * @param lunchDeduct
      * @param maxTime
      */
-    public Shift(String id, String desc, String start, String stop, String lunchStrt, String lunchEnd, int lunchDeduct, int maxTime) {
+    public Shift(int id, String desc, int start, int stop, int lunchStrt, int lunchEnd, int lunchDeduct, int maxTime) {
         this.shiftId = id;
         this.shiftDescription = desc;
-        this.start = start.substring(0, 5);
-        this.stop = stop.substring(0,5);
-        this.lunchStart = lunchStrt.substring(0,5);
-        this.lunchStop = lunchEnd.substring(0,5);
+        this.start = Integer.parseInt(Integer.toString(start).substring(0, 5));
+        
+        this.stop = Integer.parseInt(Integer.toString(stop).substring(0,5));
+        this.lunchStart = Integer.parseInt(Integer.toString(lunchStrt).substring(0,5));
+        this.lunchStop = Integer.parseInt(Integer.toString(lunchEnd).substring(0,5));
         this.lunchDeduct = lunchDeduct;
         this.maxTime = maxTime;
         
@@ -95,7 +96,7 @@ public class Shift {
      *
      * @return
      */
-    public String getStart(){
+    public int getStart(){
         return start;
         
         }
@@ -104,7 +105,7 @@ public class Shift {
      *
      * @param start
      */
-    public void setStart(String start){
+    public void setStart(int start){
            this.start = start;
        }
        
@@ -112,7 +113,7 @@ public class Shift {
      *
      * @return
      */
-    public String getStop(){
+    public int getStop(){
            return stop;
        }
        
@@ -120,7 +121,7 @@ public class Shift {
      *
      * @param stop
      */
-    public void setStop(String stop){
+    public void setStop(int stop){
            this.stop = stop;
        }
 
@@ -128,7 +129,7 @@ public class Shift {
      *
      * @return
      */
-    public String getInterval(){
+    public int getInterval(){
            return interval;
        }
        
@@ -136,7 +137,7 @@ public class Shift {
      *
      * @param interval
      */
-    public void setInterval(String interval){
+    public void setInterval(int interval){
            this.interval = interval;
        }
        
@@ -144,7 +145,7 @@ public class Shift {
      *
      * @return gracePeriod
      */
-    public String getGracePeriod(){
+    public int getGracePeriod(){
            return gracePeriod;
        }
        
@@ -152,7 +153,7 @@ public class Shift {
      *
      * @param gracePeriod
      */
-    public void setGracePeriod(String gracePeriod){
+    public void setGracePeriod(int gracePeriod){
            this.gracePeriod = gracePeriod;
        }
        
@@ -160,7 +161,7 @@ public class Shift {
      *
      * @return dockTime
      */
-    public String getDockTime(){
+    public int getDockTime(){
            return dockTime;
        }
        
@@ -168,7 +169,7 @@ public class Shift {
      *
      * @param dockTime
      */
-    public void setDockTime(String dockTime){
+    public void setDockTime(int dockTime){
            this.dockTime = dockTime;
        }
         
@@ -176,7 +177,7 @@ public class Shift {
      *
      * @return lunchStart
      */
-    public String getLunchStart(){
+    public int getLunchStart(){
            return lunchStart;
        }
        
@@ -184,7 +185,7 @@ public class Shift {
      *
      * @param lunchStart
      */
-    public void setLunchStart(String lunchStart){
+    public void setLunchStart(int lunchStart){
            this.lunchStart = lunchStart;
        }
        
@@ -192,7 +193,7 @@ public class Shift {
      *
      * @return lunchStop
      */
-    public String getLunchStop(){
+    public int getLunchStop(){
            return lunchStop;
        }
        
@@ -200,7 +201,7 @@ public class Shift {
      *
      * @param lunchStop
      */
-    public void setLunchStop(String lunchStop){
+    public void setLunchStop(int lunchStop){
            this.lunchStop = lunchStop;
        }
         

@@ -117,12 +117,12 @@ public class TASDatabase {
             ResultSet rs = stmt.executeQuery("SELECT * FROM shift WHERE id='" + id + "'");
 
             while (rs.next()) {
-                String shiftId = rs.getString(1);
+                int shiftId = rs.getInt(1);
                 String desc = rs.getString(2);
-                String start = rs.getString(3);
-                String end = rs.getString(4);
-                String lunchstrt = rs.getString(8);
-                String lunchend = rs.getString(9);
+                int start = rs.getInt(3);
+                int end = rs.getInt(4);
+                int lunchstrt = rs.getInt(8);
+                int lunchend = rs.getInt(9);
                 int lunchdeduct = rs.getInt(10);
                 int maxtime = rs.getInt(11);
 
@@ -169,7 +169,7 @@ public class TASDatabase {
         }
         return key;
     }
-    public int updateQuery(int id, string parameter){
+    public int updateQuery(int id, GregorianCalendar adjusted){
         Statement stmt = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -177,9 +177,12 @@ public class TASDatabase {
         String query, update;
         int result=0, key=0;
         try{
-            stmt=connection.createStatement();
-            update="update people set firstname=? where id=?";        
+            stmt=conn.createStatement();
+            update="update event set adjustedtimestamp='" + adjusted + "'where id='" + id +"'";        
+        } catch (SQLException ex) {
+            Logger.getLogger(TASDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return id;
         
     }
     

@@ -84,19 +84,31 @@ public class Punch {
         GregorianCalendar intOut = new GregorianCalendar(); //m8
         GregorianCalendar lunchIn = new GregorianCalendar(); //m9
         GregorianCalendar lunchOut = new GregorianCalendar(); //m10
-        if((original.after(intIn)) && (original.before(shiftSa))) {
+        if((original.after(intIn)) && (original.before(graceIn))) {
             adjusted = shiftSa;
             }
-        if((original.after(shiftSa)) && (original.before(dockOut))) {
-            adjusted = shiftSa;
-            }
-        if((original.after(graceIn)) && (original.before(dockIn))){
+        if((original.after(graceIn)) && (original.before(dockIn))) {
             adjusted = dockIn;
             }
-        if ((original.after(lunchIn)) && (original.before(lunchOut))){
+        if((original.after(lunchIn)) && (original.before(lunchOut)) && (eventtypeid == 0)){
+            adjusted = lunchIn;
+            }
+        if((original.after(lunchIn)) && (original.before(lunchOut)) && (eventtypeid == 1)){
             adjusted = lunchOut;
+            }
+        if ((original.after(dockOut)) && (original.before(graceOut))){
+            adjusted = dockOut;
             }       
-        return null;
+        if ((original.after(graceOut)) && (original.before(intOut))) {
+            adjusted = shiftSo;
+        }
+        else{
+            int unroundedMinutes = original.get(Calendar.MINUTE);
+            int mod = unroundedMinutes % 15;
+            adjusted.add(Calendar.MINUTE, mod < 8 ? -mod : (15-mod));
+        }
+        
+        return adjusted;
   }
     
     

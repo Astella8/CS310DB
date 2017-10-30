@@ -49,11 +49,11 @@ public class Shift {
     public Shift(int id, String desc, int start, int stop, int lunchStrt, int lunchEnd, int lunchDeduct, int maxTime) {
         this.shiftId = id;
         this.shiftDescription = desc;
-        this.start = Integer.parseInt(Integer.toString(start).substring(0, 5));
+        this.start = start;
         
-        this.stop = Integer.parseInt(Integer.toString(stop).substring(0,5));
-        this.lunchStart = Integer.parseInt(Integer.toString(lunchStrt).substring(0,5));
-        this.lunchStop = Integer.parseInt(Integer.toString(lunchEnd).substring(0,5));
+        this.stop = stop;
+        this.lunchStart = lunchStart;
+        this.lunchStop = lunchEnd;
         this.lunchDeduct = lunchDeduct;
         this.maxTime = maxTime;
         

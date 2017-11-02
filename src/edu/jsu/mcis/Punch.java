@@ -22,7 +22,6 @@ public class Punch {
     private int eventtypeid;
     private int punchTypeId;
     private int timestamp;
-    private String adjustDescription;
 
     /**
      *
@@ -46,7 +45,6 @@ public class Punch {
         this.eventtypeid = eventtypeid;
         //String testdate =  format.format(adjusted.getTime());
         sdf = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(original.getTime()).toUpperCase();
-        /*
         GregorianCalendar gc = new GregorianCalendar(2017,9,25,7,0);
         GregorianCalendar graceIn = new GregorianCalendar();
         graceIn.setTimeInMillis(gc.getTimeInMillis());
@@ -61,9 +59,8 @@ public class Punch {
         dockOut.setTimeInMillis(gc.getTimeInMillis());
         dockOut.roll(Calendar.MINUTE, -15);
         //Lunch Start and Stop not set to times yet
-        GregorianCalendar LunchStart = new GregorianCalendar();
-        GregorianCalendar LunchStop = new GregorianCalendar();
-        **/
+        GregorianCalendar lunchStart = new GregorianCalendar();
+        GregorianCalendar lunchStop = new GregorianCalendar();
         
     }
 
@@ -77,97 +74,46 @@ public class Punch {
     }
     
     public GregorianCalendar adjust(Shift shift){
-        GregorianCalendar start = new GregorianCalendar(original.get(Calendar.YEAR), original.get(Calendar.MONTH), original.get(Calendar.DAY_OF_MONTH), shift.getStart().getHours(), shift.getStart().getMinutes());
-        GregorianCalendar stop = new GregorianCalendar(original.get(Calendar.YEAR), original.get(Calendar.MONTH), original.get(Calendar.DAY_OF_MONTH), shift.getStop().getHours(), shift.getStop().getMinutes());
-        GregorianCalendar LunchStart = new GregorianCalendar(original.get(Calendar.YEAR), original.get(Calendar.MONTH), original.get(Calendar.DAY_OF_MONTH), shift.getLunchStart().getHours(), shift.getLunchStart().getMinutes());
-        GregorianCalendar LunchStop = new GregorianCalendar(original.get(Calendar.YEAR), original.get(Calendar.MONTH), original.get(Calendar.DAY_OF_MONTH), shift.getLunchStop().getHours(), shift.getLunchStop().getMinutes());
-        
-        if(original.get(Calendar.DAY_OF_WEEK) == 7 || original.get(Calendar.DAY_OF_WEEK) == 1){
-            adjusted.setTimeInMillis(original.getTimeInMillis());
-            adjusted.set(Calendar.SECOND, 0);
-            if(original.get(Calendar.MINUTE) % 15 != 0){
-                if(original.get(Calendar.MINUTE) % 15 <= 15/2){
-                    adjusted.set(Calendar.MINUTE, original.get(Calendar.MINUTE) - original.get(Calendar.MINUTE) % 15);
-                }
-                else{
-                    adjusted.set(Calendar.MINUTE, original.get(Calendar.MINUTE) + (15 - original.get(Calendar.MINUTE) % 15));
-                }
+        GregorianCalendar shiftSa = new GregorianCalendar(); //m1
+        GregorianCalendar shiftSo = new GregorianCalendar(); //m2
+        GregorianCalendar intIn = new GregorianCalendar(); //m3
+        GregorianCalendar dockIn = new GregorianCalendar(); //m4
+        GregorianCalendar graceIn = new GregorianCalendar(); //m5
+        GregorianCalendar dockOut = new GregorianCalendar(); //m6
+        GregorianCalendar graceOut = new GregorianCalendar(); //m7
+        GregorianCalendar intOut = new GregorianCalendar(); //m8
+        GregorianCalendar lunchIn = new GregorianCalendar(); //m9
+        GregorianCalendar lunchOut = new GregorianCalendar(); //m10
+        if((original.after(intIn)) && (original.before(graceIn))) {
+            adjusted = shiftSa;
             }
-            adjustDescription = " (Interval Round)";
+        if((original.after(graceIn)) && (original.before(dockIn))) {
+            adjusted = dockIn;
+            }
+        if((original.after(lunchIn)) && (original.before(lunchOut)) && (eventtypeid == 0)){
+            adjusted = lunchIn;
+            }
+        if((original.after(lunchIn)) && (original.before(lunchOut)) && (eventtypeid == 1)){
+            adjusted = lunchOut;
+            }
+        if ((original.after(dockOut)) && (original.before(graceOut))){
+            adjusted = dockOut;
+            }       
+        if ((original.after(graceOut)) && (original.before(intOut))) {
+            adjusted = shiftSo;
         }
-        else if(eventtypeid == 1){
-            if(original.getTimeInMillis() > LunchStart.getTimeInMillis()){
-                adjusted.setTimeInMillis(LunchStop.getTimeInMillis());
-                adjustDescription = " (Lunch Stop)";
-            }
-            else if((original.get(Calendar.MINUTE) <= (start.get(Calendar.MINUTE) + shift.getGracePeriod())) && (original.get(Calendar.HOUR_OF_DAY) == start.get(Calendar.HOUR_OF_DAY))){
-                adjusted.setTimeInMillis(start.getTimeInMillis());
-                adjustDescription = " (Shift Start)";
-            }
-            else if((original.get(Calendar.MINUTE) >= (start.get(Calendar.MINUTE) + (60 - shift.getDockTime())))  && (original.get(Calendar.HOUR_OF_DAY) == start.get(Calendar.HOUR_OF_DAY) -1)){
-                adjusted.setTimeInMillis(start.getTimeInMillis());
-                adjustDescription = " (Shift Start)";
-            }
-            else if((original.getTimeInMillis() > (start.get(Calendar.MINUTE) + shift.getGracePeriod())) && (original.getTimeInMillis() <= start.get(Calendar.MINUTE) + shift.getDockTime())){
-                adjusted.setTimeInMillis(start.getTimeInMillis());
-                adjusted.roll(Calendar.MINUTE, shift.getDockTime());
-                adjustDescription = " (Shift Start)";
-            }
-            else{
-                adjusted.setTimeInMillis(original.getTimeInMillis());
-                if(original.get(Calendar.MINUTE) % 15 != 0){
-                    adjusted.set(Calendar.SECOND, 0);
-                    if(original.get(Calendar.MINUTE) % 15 <= 15/2){
-                        adjusted.set(Calendar.MINUTE, original.get(Calendar.MINUTE) - original.get(Calendar.MINUTE) % 15); 
-                    }
-                    else{
-                        adjusted.set(Calendar.MINUTE, original.get(Calendar.MINUTE) + (15 - original.get(Calendar.MINUTE) % 15));
-                    }
-                    adjustDescription = " (Shift Start)";
-                }
-                else {adjustDescription = " (None)";}
-            }
-        }
-        else if(eventtypeid == 0){
-            if(original.getTimeInMillis() < LunchStop.getTimeInMillis()){
-                adjusted.setTimeInMillis(LunchStart.getTimeInMillis());
-                adjustDescription = " (Lunch Start)";
-            }
-            else if((original.get(Calendar.MINUTE) >= (60 - shift.getGracePeriod())) && (original.get(Calendar.HOUR_OF_DAY) == stop.get(Calendar.HOUR_OF_DAY) - 1)){
-                adjusted.setTimeInMillis(stop.getTimeInMillis());
-                adjustDescription = " (Shift Stop)";
-            }
-            else if((original.get(Calendar.MINUTE) <= (stop.get(Calendar.MINUTE) + shift.getDockTime())) && (original.get(Calendar.HOUR_OF_DAY) == stop.get(Calendar.HOUR_OF_DAY))){
-                adjusted.setTimeInMillis(stop.getTimeInMillis());
-                adjustDescription = " (Shift Stop)";
-            }
-            else if((original.getTimeInMillis() < (60 - shift.getGracePeriod())) && (original.getTimeInMillis() >= (60 - shift.getDockTime()))){
-                adjusted.setTimeInMillis(stop.getTimeInMillis());
-                adjusted.roll(Calendar.MINUTE, 60 - shift.getDockTime());
-                adjustDescription = " (Shift Stop)";
-            }
-            else{
-                adjusted.setTimeInMillis(original.getTimeInMillis());
-                if(original.get(Calendar.MINUTE) % 15 != 0){
-                    adjusted.set(Calendar.SECOND, 0);
-                    if(original.get(Calendar.MINUTE) % 15 <= 15/2){
-                        adjusted.set(Calendar.MINUTE, original.get(Calendar.MINUTE) - original.get(Calendar.MINUTE) % 15);
-                    }
-                    else{
-                        adjusted.set(Calendar.MINUTE, original.get(Calendar.MINUTE) + (15 - original.get(Calendar.MINUTE) % 15));
-                    }
-                    adjustDescription= " (Shift Stop)";
-                }
-                else {adjustDescription = " (None)";}
-            }
+        else{
+            int unroundedMinutes = original.get(Calendar.MINUTE);
+            int mod = unroundedMinutes % 15;
+            adjusted.add(Calendar.MINUTE, mod < 8 ? -mod : (15-mod));
         }
         
-    }
-
+        return adjusted;
+  }
     
     
     /**
-     * @return 
+     * @param punchTypeId
      */
     public int getPunchTypeId() {
         return punchTypeId;
@@ -234,7 +180,7 @@ public class Punch {
      *
      * @return original
      */
-    public GregorianCalendar getOriginalTimestamp() {
+    public GregorianCalendar getOriginaltimestamp() {
         return original;
     }
 
@@ -242,7 +188,7 @@ public class Punch {
      *
      * @return adjusted
      */
-    public GregorianCalendar getAdjustedTimestamp() {
+    public GregorianCalendar getAdjustedTimeStamp() {
         return adjusted;
     }
     
@@ -258,39 +204,22 @@ public class Punch {
      *
      * @return String to output onto screen
      */
-    public String printoriginal() {
+    public String printOriginalTimestamp() {
         String Status = "";
-        switch (eventtypeid) {
-            case 1:
-                Status = " CLOCKED IN: ";
-                break;
-            case 0:
-                Status = " CLOCKED OUT: ";
-                break;
-            default:
-                Status = " TIMED OUT: ";
-                break;
+        if (eventtypeid == 1) {
+            Status = " CLOCKED IN: ";
+        } else if (eventtypeid == 0) {
+            Status = " CLOCKED OUT: ";
+        } else {
+            Status = " TIMED OUT: ";
         }
-        System.out.println("#" + badgeId + Status + sdf);
         return "#" + badgeId + Status + sdf;
     }
     
-    public String printadjusted(){
-        String Status = "";
-        switch (eventtypeid) {
-            case 1:
-                Status = " CLOCKED IN: ";
-                break;
-            case 0:
-                Status = " CLOCKED OUT: ";
-                break;
-            default:
-                Status = " TIMED OUT: ";
-                break;
-        }
-        System.out.println("#" + badgeId + Status + sdf);
-        return "#" + badgeId + Status + sdf;
+    public String printAdjustedTimestamp(){
         
+        
+        return null;
     }
 
 

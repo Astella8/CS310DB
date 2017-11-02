@@ -45,7 +45,8 @@ public class Punch {
         this.eventtypeid = eventtypeid;
         //String testdate =  format.format(adjusted.getTime());
         sdf = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(original.getTime()).toUpperCase();
-        GregorianCalendar gc = new GregorianCalendar(2017,9,25,7,0);
+        /*
+        gc = new GregorianCalendar(2017,9,25,7,0);
         GregorianCalendar graceIn = new GregorianCalendar();
         graceIn.setTimeInMillis(gc.getTimeInMillis());
         graceIn.roll(Calendar.MINUTE, 5);
@@ -61,6 +62,7 @@ public class Punch {
         //Lunch Start and Stop not set to times yet
         GregorianCalendar lunchStart = new GregorianCalendar();
         GregorianCalendar lunchStop = new GregorianCalendar();
+        **/
         
     }
 

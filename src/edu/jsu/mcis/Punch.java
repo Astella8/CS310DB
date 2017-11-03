@@ -1,7 +1,9 @@
 package edu.jsu.mcis;
 
 import java.util.*;
+import java.util.Calendar;
 import java.text.SimpleDateFormat;
+import java.lang.Math;
 
 /**
  *
@@ -75,7 +77,8 @@ public class Punch {
         
     }
     
-    public GregorianCalendar adjust(Shift shift){
+    /*public GregorianCalendar adjust(Shift shift){
+        GregorianCalendar gc = new GregorianCalendar();
         GregorianCalendar shiftSa = new GregorianCalendar(); //m1
         GregorianCalendar shiftSo = new GregorianCalendar(); //m2
         GregorianCalendar intIn = new GregorianCalendar(); //m3
@@ -111,7 +114,46 @@ public class Punch {
         }
         
         return adjusted;
-  }
+  }**/
+    public void Adjust(Shift s) {
+        boolean adj = false;
+        GregorianCalendar gc = new GregorianCalendar();
+        int punchMinute = original.get(Calendar.MINUTE);
+        int interval = s.getInterval();
+        int day = original.get(Calendar.DAY_OF_WEEK);
+        int sat = original.get(Calendar.SATURDAY);
+        int sun = original.get(Calendar.SUNDAY);
+        int adjustedMin;
+        adjustedMin = 0;
+        
+        // Generate Gregorian Calendar Objects
+        if ((day != sat) && (day != sun)){
+            
+            if (punchTypeId == 1) {
+                // Check Rules for clock in punches; Flip adjusted to True if rule applies
+                
+            }
+            else if (punchTypeId == 0) {
+                // Check Rules for clock out punches; Flip adjusted to True if rule applies
+                
+            }
+        }
+        if (!adj) {
+            if (punchMinute % interval != 0) {
+                if (punchMinute % interval < (interval/2)) {
+                    adjustedMin = (Math.round(punchMinute / interval) * interval); // Round DOWN
+                }
+                else {
+                    adjustedMin = adjusted.add(Calendar.MINUTE,(adjustedMin - punchMinute)) + interval; //Round UP
+                    adjusted.set(Calendar.SECOND,0);
+                }
+                
+            }
+            else {
+                //leave punch alone
+            }
+        }// Apply adjustment to "ajustedtimestamp"
+    }
     
     
     /**

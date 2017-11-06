@@ -114,15 +114,15 @@ public class TASDatabase {
         try {
             Statement stmt = conn.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT * FROM shift WHERE id='" + id + "'");
+            ResultSet rs = stmt.executeQuery("SELECT *,Hour(start) as StartHour, Minute(start) as StartMinute\n" +
+            ",Hour(lunchstart) as LunchStartHour, Minute(lunchstart) as LunchStartMinute\n" +
+            ",Hour(lunchstop) as LunchStopHour, Minute(lunchstop) as LunchStopMinute\n" +
+            ",Hour(stop) as StopHour, Minute(stop) as StopMinute\n" +
+            "FROM tas.shift s WHERE id = '" + id + "'");
 
             while (rs.next()) {
                 int shiftId = rs.getInt(1);
                 String desc = rs.getString(2);
-                int start = rs.getInt(3);
-                int end = rs.getInt(4);
-                int lunchstrt = rs.getInt(8);
-                int lunchend = rs.getInt(9);
                 int lunchdeduct = rs.getInt(10);
                 int maxtime = rs.getInt(11);
 

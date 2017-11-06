@@ -17,6 +17,7 @@ public class Punch {
     private String punchId;
     private String badgeId;
     private String punchDescription;
+    private String eventData;
     private int terminalId;
     private GregorianCalendar original;
     private GregorianCalendar adjusted;
@@ -45,6 +46,7 @@ public class Punch {
         this.badgeId = badgeId;
         this.shiftId = shiftId;
         this.eventtypeid = eventtypeid;
+        this.eventData = "";
         //String testdate =  format.format(adjusted.getTime());
         sdf = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(original.getTime()).toUpperCase();
         /*
@@ -121,16 +123,15 @@ public class Punch {
         int punchMinute = original.get(Calendar.MINUTE);
         int interval = s.getInterval();
         int day = original.get(Calendar.DAY_OF_WEEK);
-        int sat = original.get(Calendar.SATURDAY);
-        int sun = original.get(Calendar.SUNDAY);
         int adjustedMin;
         adjustedMin = 0;
         
         // Generate Gregorian Calendar Objects
-        if ((day != sat) && (day != sun)){
+        if ((day != Calendar.SATURDAY) && (day != Calendar.SUNDAY)){
             
             if (punchTypeId == 1) {
                 // Check Rules for clock in punches; Flip adjusted to True if rule applies
+                
                 
             }
             else if (punchTypeId == 0) {
@@ -144,13 +145,14 @@ public class Punch {
                     adjustedMin = (Math.round(punchMinute / interval) * interval); // Round DOWN
                 }
                 else {
-                    adjustedMin = adjusted.add(Calendar.MINUTE,(adjustedMin - punchMinute)) + interval; //Round UP
-                    adjusted.set(Calendar.SECOND,0);
+                    adjustedMin = (Math.round(punchMinute / interval) * interval);//Round Up
                 }
-                
+                adjusted.add(Calendar.MINUTE,(adjustedMin - punchMinute)); 
+                adjusted.set(Calendar.SECOND,0);
+                eventData = "Interval Round";
             }
             else {
-                //leave punch alone
+                eventData = "None";
             }
         }// Apply adjustment to "ajustedtimestamp"
     }

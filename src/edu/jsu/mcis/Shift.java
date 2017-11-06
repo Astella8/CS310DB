@@ -9,16 +9,20 @@ public class Shift {
     
     private int shiftId;
     private String shiftDescription;
-    private int start;
-    private int stop;
     private int interval;
     private int gracePeriod;
     private int dockTime;
-    private int lunchStart;
-    private int lunchStop;
     private int lunchDeduct;
     private int maxTime;
     private int overtimeThreshold;
+    private int startHour;
+    private int startMinute;
+    private int lunchStartHour;
+    private int lunchStartMinute;
+    private int lunchStopHour;
+    private int lunchStopMinute;
+    private int stopHour;
+    private int stopMinute;
     
     /**
      * Creates Shift object
@@ -26,38 +30,35 @@ public class Shift {
     public Shift(){
         shiftId = 0;
         shiftDescription ="";
-        start = 0;
-        stop = 0;
         interval = 0;
         gracePeriod = 0;
         dockTime = 0;
         maxTime=0;
         overtimeThreshold =0;
+        startHour = 0;
+        startMinute = 0;
+        lunchStartHour = 0;
+        lunchStartMinute = 0;
+        lunchStopHour = 0;
+        lunchStopMinute = 0;
+        stopHour = 0;
+        stopMinute = 0;
+        
     }
 
     /**
      *
      * @param id
      * @param desc
-     * @param start
-     * @param stop
-     * @param lunchStrt
-     * @param lunchEnd
      * @param lunchDeduct
      * @param maxTime
      */
-    public Shift(int id, String desc, int start, int stop, int lunchStrt, int lunchEnd, int lunchDeduct, int maxTime) {
-        this.shiftId = id;
-        this.shiftDescription = desc;
-        this.start = start;
         
-        this.stop = stop;
-        this.lunchStart = lunchStart;
-        this.lunchStop = lunchEnd;
-        this.lunchDeduct = lunchDeduct;
-        this.maxTime = maxTime;
-        
-    }
+    
+
+    Shift(int shiftId, String desc, int lunchdeduct, int maxtime, int startHour, int startMinute, int lunchStartHour, int lunchStartMinute, int lunchStopHour, int lunchStopMinute, int stopHour, int stopMinute) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+}
     
     /**
      *
@@ -90,39 +91,6 @@ public class Shift {
      */
     public void setShiftDescription(String shiftDescription){
            this.shiftDescription = shiftDescription;
-       }
-
-    /**
-     *
-     * @return
-     */
-    public int getStart(){
-        return start;
-        
-        }
-
-    /**
-     *
-     * @param start
-     */
-    public void setStart(int start){
-           this.start = start;
-       }
-       
-    /**
-     *
-     * @return
-     */
-    public int getStop(){
-           return stop;
-       }
-       
-    /**
-     *
-     * @param stop
-     */
-    public void setStop(int stop){
-           this.stop = stop;
        }
 
     /**
@@ -177,34 +145,8 @@ public class Shift {
      *
      * @return lunchStart
      */
-    public int getLunchStart(){
-           return lunchStart;
-       }
-       
-    /**
-     *
-     * @param lunchStart
-     */
-    public void setLunchStart(int lunchStart){
-           this.lunchStart = lunchStart;
-       }
-       
-    /**
-     *
-     * @return lunchStop
-     */
-    public int getLunchStop(){
-           return lunchStop;
-       }
-       
-    /**
-     *
-     * @param lunchStop
-     */
-    public void setLunchStop(int lunchStop){
-           this.lunchStop = lunchStop;
-       }
-        
+  
+    
     /**
      *
      * @return lunchDeduct
@@ -259,7 +201,7 @@ public class Shift {
     @Override
     public String toString(){
         String finalString;
-        finalString = (shiftDescription + ": " + start + " - "+ stop + " (510 minutes); Lunch: " + lunchStart + " - " + lunchStop + " (30 minutes)");
+        finalString = (shiftDescription + ": " + startHour + startMinute + " - "+ stopHour + stopMinute + " (510 minutes); Lunch: " + lunchStartHour + lunchStartMinute + " - " + lunchStopHour + lunchStopMinute + " (30 minutes)");
         return finalString;
        }
 }

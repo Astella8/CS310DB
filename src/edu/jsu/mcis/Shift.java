@@ -1,12 +1,11 @@
 package edu.jsu.mcis;
 
-
 /**
  *
  * @author Wright Media
  */
 public class Shift {
-    
+
     private int shiftId;
     private String shiftDescription;
     private int interval;
@@ -23,18 +22,14 @@ public class Shift {
     private int lunchStopMinute;
     private int stopHour;
     private int stopMinute;
-    
-    /**
-     * Creates Shift object
-     */
-    public Shift(){
+    public Shift() {
         shiftId = 0;
-        shiftDescription ="";
+        shiftDescription = "";
         interval = 0;
         gracePeriod = 0;
         dockTime = 0;
-        maxTime=0;
-        overtimeThreshold =0;
+        maxTime = 0;
+        overtimeThreshold = 0;
         startHour = 0;
         startMinute = 0;
         lunchStartHour = 0;
@@ -43,165 +38,110 @@ public class Shift {
         lunchStopMinute = 0;
         stopHour = 0;
         stopMinute = 0;
+    }
+    Shift(int shiftId, String desc, int lunchdeduct, int maxtime, int startHour, int startMinute, int lunchStartHour, int lunchStartMinute, int lunchStopHour, int lunchStopMinute, int stopHour, int stopMinute) {
         
     }
-
-    /**
-     *
-     * @param id
-     * @param desc
-     * @param lunchDeduct
-     * @param maxTime
-     */
-        
-    
-
-    Shift(int shiftId, String desc, int lunchdeduct, int maxtime, int startHour, int startMinute, int lunchStartHour, int lunchStartMinute, int lunchStopHour, int lunchStopMinute, int stopHour, int stopMinute) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-}
-    
-    /**
-     *
-     * @return
-     */
-    public int getShiftId(){
+    public int getShiftId() {
         return shiftId;
-        
-        }
-
-    /**
-     *
-     * @param shiftId
-     */
-    public void setShiftId(int shiftId){
-           this.shiftId = shiftId;
-       }
-       
-    /**
-     *
-     * @return
-     */
-    public String getShiftDescription(){
-           return shiftDescription;
-       }
-       
-    /**
-     *
-     * @param shiftDescription
-     */
-    public void setShiftDescription(String shiftDescription){
-           this.shiftDescription = shiftDescription;
-       }
-
-    /**
-     *
-     * @return
-     */
-    public int getInterval(){
-           return interval;
-       }
-       
-    /**
-     *
-     * @param interval
-     */
-    public void setInterval(int interval){
-           this.interval = interval;
-       }
-       
-    /**
-     *
-     * @return gracePeriod
-     */
-    public int getGracePeriod(){
-           return gracePeriod;
-       }
-       
-    /**
-     *
-     * @param gracePeriod
-     */
-    public void setGracePeriod(int gracePeriod){
-           this.gracePeriod = gracePeriod;
-       }
-       
-    /**
-     *
-     * @return dockTime
-     */
-    public int getDockTime(){
-           return dockTime;
-       }
-       
-    /**
-     *
-     * @param dockTime
-     */
-    public void setDockTime(int dockTime){
-           this.dockTime = dockTime;
-       }
-        
-    /**
-     *
-     * @return lunchStart
-     */
-  
-    
-    /**
-     *
-     * @return lunchDeduct
-     */
-    public int getLunchDeduct(){
-           return lunchDeduct;
-       }
-       
-    /**
-     *
-     * @param lunchDeduct
-     */
-    public void setLunchDeduct(int lunchDeduct){
-           this.lunchDeduct = lunchDeduct;
-       }
-       
-    /**
-     *
-     * @return maxTime
-     */
-    public int getMaxTime(){
-           return maxTime;
-       }
-       
-    /**
-     *
-     * @param maxTime
-     */
-    public void setMaxTime(int maxTime){
-           this.maxTime = maxTime;
-       }
-       
-    /**
-     *
-     * @return overtimeThreshold
-     */
-    public int getOvertimeThreshold(){
-           return overtimeThreshold;
-       }
-       
-    /**
-     *
-     * @param overtimeThreshold
-     */
-    public void setOvertimeThreshold(int overtimeThreshold){
-           this.overtimeThreshold = overtimeThreshold;
-       }
-    /**
-     * 
-     * @return finalString 
-     */
+    }
+    public void setShiftId(int shiftId) {
+        this.shiftId = shiftId;
+    }
+    public String getShiftDescription() {
+        return shiftDescription;
+    }
+    public void setShiftDescription(String shiftDescription) {
+        this.shiftDescription = shiftDescription;
+    }
+    public int getInterval() {
+        return interval;
+    }
+    public void setInterval(int interval) {
+        this.interval = interval;
+    }
+    public int getGracePeriod() {
+        return gracePeriod;
+    }
+    public void setGracePeriod(int gracePeriod) {
+        this.gracePeriod = gracePeriod;
+    }
+    public int getDockTime() {
+        return dockTime;
+    }
+    public void setDockTime(int dockTime) {
+        this.dockTime = dockTime;
+    }
+    public int getLunchDeduct() {
+        return lunchDeduct;
+    }
+    public void setLunchDeduct(int lunchDeduct) {
+        this.lunchDeduct = lunchDeduct;
+    }
+    public int getMaxTime() {
+        return maxTime;
+    }
+    public void setMaxTime(int maxTime) {
+        this.maxTime = maxTime;
+    }
+    public int getOvertimeThreshold() {
+        return overtimeThreshold;
+    }
+    public void setOvertimeThreshold(int overtimeThreshold) {
+        this.overtimeThreshold = overtimeThreshold;
+    }
+    public int getStartHour() {
+        return startHour;
+    }
+    public void setStartHour(int startHour) {
+        this.startHour = startHour;
+    }
+    public int getStartMinute() {
+        return startMinute;
+    }
+    public void setStartMinute(int startMinute) {
+        this.startMinute = startMinute;
+    }
+    public int getLunchStartHour() {
+        return lunchStartHour;
+    }
+    public void setLunchStartHour(int lunchStartHour) {
+        this.lunchStartHour = lunchStartHour;
+    }
+    public int getLunchStartMinute() {
+        return lunchStartMinute;
+    }
+    public void setLunchStartMinute(int lunchStartMinute) {
+        this.lunchStartMinute = lunchStartMinute;
+    }
+    public int getLunchStopHour() {
+        return lunchStopHour;
+    }
+    public void setLunchStopHour(int lunchStopHour) {
+        this.lunchStopHour = lunchStopHour;
+    }
+    public int getLunchStopMinute() {
+        return lunchStopMinute;
+    }
+    public void setLunchStopMinute(int lunchStopMinute) {
+        this.lunchStopMinute = lunchStopMinute;
+    }
+    public int getStopHour() {
+        return stopHour;
+    }
+    public void setStopHour(int stopHour) {
+        this.stopHour = stopHour;
+    }
+    public int getStopMinute() {
+        return stopMinute;
+    }
+    public void setStopMinute(int stopMinute) {
+        this.stopMinute = stopMinute;
+    }
     @Override
-    public String toString(){
+    public String toString() {
         String finalString;
-        finalString = (shiftDescription + ": " + startHour + startMinute + " - "+ stopHour + stopMinute + " (510 minutes); Lunch: " + lunchStartHour + lunchStartMinute + " - " + lunchStopHour + lunchStopMinute + " (30 minutes)");
+        finalString = (shiftDescription + ": " + startHour + startMinute + " - " + stopHour + stopMinute + " (510 minutes); Lunch: " + lunchStartHour + lunchStartMinute + " - " + lunchStopHour + lunchStopMinute + " (30 minutes)");
         return finalString;
-       }
+    }
 }

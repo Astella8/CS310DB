@@ -125,6 +125,7 @@ public class TASDatabase {
                 String desc = rs.getString(2);
                 int lunchdeduct = rs.getInt(10);
                 int maxtime = rs.getInt(11);
+                int interval = rs.getInt(5);
                 int startHour = rs.getInt(13);
                 int startMinute = rs.getInt(14);
                 int lunchStartHour = rs.getInt(15);
@@ -134,7 +135,7 @@ public class TASDatabase {
                 int stopHour = rs.getInt(19);
                 int stopMinute = rs.getInt(20);
 
-                s = new Shift(shiftId, desc, lunchdeduct, maxtime, startHour, startMinute, lunchStartHour, lunchStartMinute, lunchStopHour, lunchStopMinute, stopHour, stopMinute);
+                s = new Shift(shiftId, desc, lunchdeduct, maxtime, interval, startHour, startMinute, lunchStartHour, lunchStartMinute, lunchStopHour, lunchStopMinute, stopHour, stopMinute);
             }
         } catch (SQLException e) {
             System.err.println(e.toString());
@@ -222,6 +223,5 @@ public class TASDatabase {
     public static void main(String args[]) {
         TASDatabase db = new TASDatabase();
         Shift s = db.getShift(1);
-        System.out.println(s);
     }
 }

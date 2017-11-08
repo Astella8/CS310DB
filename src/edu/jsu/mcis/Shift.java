@@ -22,26 +22,47 @@ public class Shift {
     private int lunchStopMinute;
     private int stopHour;
     private int stopMinute;
-    public Shift() {
-        shiftId = 0;
-        shiftDescription = "";
-        interval = 0;
-        gracePeriod = 0;
-        dockTime = 0;
-        maxTime = 0;
-        overtimeThreshold = 0;
-        startHour = 0;
-        startMinute = 0;
-        lunchStartHour = 0;
-        lunchStartMinute = 0;
-        lunchStopHour = 0;
-        lunchStopMinute = 0;
-        stopHour = 0;
-        stopMinute = 0;
+
+/**
+    public Shift(int shiftId, String shiftDescription, int interval, int gracePeriod, int dockTime, int lunchDeduct, int maxTime, int overtimeThreshold, int startHour, int startMinute, int lunchStartHour, int lunchStartMinute, int lunchStopHour, int lunchStopMinute, int stopHour, int stopMinute) {
+        this.shiftId = shiftId;
+        this.shiftDescription = shiftDescription;
+        this.interval = interval;
+        this.gracePeriod = gracePeriod;
+        this.dockTime = dockTime;
+        this.lunchDeduct = lunchDeduct;
+        this.maxTime = maxTime;
+        this.overtimeThreshold = overtimeThreshold;
+        this.startHour = startHour;
+        this.startMinute = startMinute;
+        this.lunchStartHour = lunchStartHour;
+        this.lunchStartMinute = lunchStartMinute;
+        this.lunchStopHour = lunchStopHour;
+        this.lunchStopMinute = lunchStopMinute;
+        this.stopHour = stopHour;
+        this.stopMinute = stopMinute;
     }
-    Shift(int shiftId, String desc, int lunchdeduct, int maxtime, int startHour, int startMinute, int lunchStartHour, int lunchStartMinute, int lunchStopHour, int lunchStopMinute, int stopHour, int stopMinute) {
-        
+**/
+    Shift(int shiftId, String desc, int lunchdeduct, int maxtime, int interval ,int startHour, int startMinute, int lunchStartHour, int lunchStartMinute, int lunchStopHour, int lunchStopMinute, int stopHour, int stopMinute) {
+         this.shiftId = shiftId;
+        this.shiftDescription = shiftDescription;
+        this.gracePeriod = gracePeriod;
+        this.dockTime = dockTime;
+        this.lunchDeduct = lunchDeduct;
+        this.maxTime = maxTime;
+        this.interval = interval;
+        this.overtimeThreshold = overtimeThreshold;
+        this.startHour = startHour;
+        this.startMinute = startMinute;
+        this.lunchStartHour = lunchStartHour;
+        this.lunchStartMinute = lunchStartMinute;
+        this.lunchStopHour = lunchStopHour;
+        this.lunchStopMinute = lunchStopMinute;
+        this.stopHour = stopHour;
+        this.stopMinute = stopMinute;
     }
+    
+    
     public int getShiftId() {
         return shiftId;
     }

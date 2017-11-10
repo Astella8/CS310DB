@@ -25,7 +25,7 @@ public class TASDatabase {
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String u = "root";
-            String p = "norris";
+            String p = "root";
 
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas", u, p);
 
@@ -81,15 +81,18 @@ public class TASDatabase {
 
             Statement stmt = conn.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT UNIX_TIMESTAMP(originaltimestamp),terminalid,eventtypeid,badgeid FROM event WHERE id='" + id + "'");
+            ResultSet rs = stmt.executeQuery("SELECT UNIX_TIMESTAMP(originaltimestamp),terminalid,eventtypeid,badgeid,Year(originaltimestamp) as StartYear, Month(originaltimestamp) as StartMonth, DAY(originaltimestamp) as StartDay FROM event WHERE id='" + id + "'");
             while (rs.next()) {
                 int original = rs.getInt(1);
                 int terminalId = rs.getInt(2);
                 int shiftId = rs.getInt(3);
                 int eventTypeId = rs.getInt(3);
                 String badgeId = rs.getString(4);
+                int startYear = rs.getInt(5);
+                int startMonth = rs.getInt(6);
+                int startDay = rs.getInt(7);
                 int adjusted = 0;
-                p = new Punch(terminalId, badgeId, shiftId, original, adjusted, eventTypeId);
+                p = new Punch(terminalId, badgeId, shiftId, original, adjusted, eventTypeId, startYear, startMonth,startDay);
 
             }
         } catch (SQLException e) {

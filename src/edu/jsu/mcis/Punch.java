@@ -184,7 +184,7 @@ public class Punch {
                 else if((original.after(graceIn)) && (original.before(dockIn))) {
                     adjusted = dockIn;
                     adj = true;
-                    eventData = "Shift Docked";
+                    eventData = "Shift Dock";
                     System.out.println("line 172****************");
                 }
                 else if((original.after(lunchIn)) && (original.before(lunchOut))){
@@ -220,6 +220,7 @@ public class Punch {
             if (punchMinute % interval != 0) {
                 if (punchMinute % interval < (interval/2)) {
                     adjustedMin = (Math.round(punchMinute / interval) * interval); // Round DOWN
+                    adjusted = intIn.add(adjustedMin);
                 }
                 else {
                     adjustedMin = (Math.round(punchMinute / interval) * interval);//Round Up
@@ -350,7 +351,7 @@ public class Punch {
             Status = " TIMED OUT: ";
         }
         
-        return "#" + badgeId + Status + sdf + eventData;
+        return "#" + badgeId + Status + sdf2 +" (" + eventData + ")";
     }
 
 

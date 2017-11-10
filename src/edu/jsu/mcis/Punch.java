@@ -163,25 +163,25 @@ public class Punch {
                 if((original.after(graceIn)) && (original.before(dockIn))) {
                     adjusted = dockIn;
                     adj = true;
-                    eventData = "Shift Start";
+                    eventData = "Shift Docked";
                 }
-                if((original.after(lunchIn)) && (original.before(lunchOut)) && (eventtypeid == 1)){
+                if((original.after(lunchIn)) && (original.before(lunchOut))){
                     adjusted = lunchOut;
                     adj = true;
-                    eventData = "Shift Start";
+                    eventData = "Lunch Start";
                 }
             }
             else if (punchTypeId == 0) {
                 // Check Rules for clock out punches; Flip adjusted to True if rule applies
-                if((original.after(lunchIn)) && (original.before(lunchOut)) && (eventtypeid == 0)){
+                if((original.after(lunchIn)) && (original.before(lunchOut))){
                     adjusted = lunchIn;
                     adj = true;
-                    eventData = "Shift Stop";
+                    eventData = "Lunch Stop";
                 }
                 if ((original.after(dockOut)) && (original.before(graceOut))){
                     adjusted = dockOut;
                     adj = true;
-                    eventData = "Shift Stop";
+                    eventData = "Shift Docked";
                 }       
                 if ((original.after(graceOut)) && (original.before(intOut))) {
                     adjusted = shiftSo;

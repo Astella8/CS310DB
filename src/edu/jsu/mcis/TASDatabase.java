@@ -178,7 +178,7 @@ public class TASDatabase {
         }
         return key;
     }
-    public int updateQuery(int id, GregorianCalendar adjusted){
+    public int updateQuery(int id, GregorianCalendar adjusted, String eventdata){
         Statement stmt = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -187,7 +187,8 @@ public class TASDatabase {
         int result=0, key=0;
         try{
             stmt=conn.createStatement();
-            update="update event set adjustedtimestamp='" + adjusted + "'where id='" + id +"'";        
+            update="update event set adjustedtimestamp='" + adjusted + ", eventdata = " + eventdata + "'where id='" + id +"'";        
+        
         } catch (SQLException ex) {
             Logger.getLogger(TASDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -198,23 +199,17 @@ public class TASDatabase {
 
     public int getClockTimes(String id) {
         try {
-            
             Statement stmt = conn.createStatement();
-
             ResultSet rs = stmt.executeQuery("SELECT * FROM event WHERE eventtypeid='" + id + "'");
-
             while (rs.next()) {
                 int shiftId = rs.getInt(7);
                 return shiftId;
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(TASDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
-
     }
-
     /**
      * Main function creates database connection the runs test.
      *

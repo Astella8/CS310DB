@@ -132,6 +132,7 @@ public class Punch {
         int day = original.get(Calendar.DAY_OF_WEEK);
         int adjustedMin;
         adjustedMin = 0;
+        adjusted = new GregorianCalendar();
         
         GregorianCalendar currentgc = new GregorianCalendar();
         GregorianCalendar shiftSa = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK, shift.getStartHour(), shift.getStartMinute()); //m1
@@ -152,26 +153,38 @@ public class Punch {
         GregorianCalendar lunchOut = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK, shift.getLunchStopHour(), shift.getLunchStopMinute()); //m10
         
         // Generate Gregorian Calendar Objects
+        System.out.println("line 156 works");
         if ((day != Calendar.SATURDAY) && (day != Calendar.SUNDAY)){ 
-            if (punchTypeId == 1) {
+            System.out.println("line 158 works");
+            if (eventtypeid == 1) {
+                System.out.println(original);
+                //System.out.println(graceIn);
+                //System.out.println(intIn);
+                //System.out.println((graceIn.before(original)));
                 // Check Rules for clock in punches; Flip adjusted to True if rule applies
-                if((original.after(intIn)) && (original.before(graceIn))) {
+                if((original.before(intIn)) && (original.after(graceIn))) {
                     adjusted = shiftSa;
                     adj = true;
                     eventData = "Shift Start";
+                    System.out.println("line 166*********************************");
                 }
                 if((original.after(graceIn)) && (original.before(dockIn))) {
                     adjusted = dockIn;
                     adj = true;
                     eventData = "Shift Docked";
+                    System.out.println("line 172");
                 }
                 if((original.after(lunchIn)) && (original.before(lunchOut))){
                     adjusted = lunchOut;
                     adj = true;
                     eventData = "Lunch Start";
+                    System.out.println("line 178");
+                }
+                else {
+                    //System.out.println(original.before(graceIn));
                 }
             }
-            else if (punchTypeId == 0) {
+            else if (eventtypeid == 0) {
                 // Check Rules for clock out punches; Flip adjusted to True if rule applies
                 if((original.after(lunchIn)) && (original.before(lunchOut))){
                     adjusted = lunchIn;

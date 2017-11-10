@@ -165,7 +165,7 @@ public class Feature3_REV2 {
         assertEquals(p5.printAdjustedTimestamp(), "#408B195F CLOCKED OUT: TUE 08/22/2017 15:30:00 (Shift Stop)");
 
         assertEquals(p6.printOriginalTimestamp(), "#1B2052DE CLOCKED OUT: TUE 08/15/2017 15:15:00");
-        assertEquals(p6.printAdjustedTimestamp(), "#1B2052DE CLOCKED OUT: TUE 08/15/2017 15:15:00 (Shift Dock)");
+        assertEquals(p6.printAdjustedTimestamp(), "#1B2052DE CLOCKED OUT: TUE 08/15/2017 15:15:00 (Shift Dock)1") ;
 
         assertEquals(p7.printOriginalTimestamp(), "#ADD650A8 CLOCKED OUT: TUE 09/12/2017 15:37:12");
         assertEquals(p7.printAdjustedTimestamp(), "#ADD650A8 CLOCKED OUT: TUE 09/12/2017 15:30:00 (Shift Stop)");        

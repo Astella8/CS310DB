@@ -149,41 +149,33 @@ public class Punch {
         intOut.add(Calendar.MINUTE, 15);
         GregorianCalendar lunchIn = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK, shift.getLunchStartHour(), shift.getLunchStartMinute()); //m9
         GregorianCalendar lunchOut = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK, shift.getLunchStopHour(), shift.getLunchStopMinute()); //m10
-        if((original.after(intIn)) && (original.before(graceIn))) {
-            adjusted = shiftSa;
-            }
-        if((original.after(graceIn)) && (original.before(dockIn))) {
-            adjusted = dockIn;
-            }
-        if((original.after(lunchIn)) && (original.before(lunchOut)) && (eventtypeid == 0)){
-            adjusted = lunchIn;
-            }
-        if((original.after(lunchIn)) && (original.before(lunchOut)) && (eventtypeid == 1)){
-            adjusted = lunchOut;
-            }
-        if ((original.after(dockOut)) && (original.before(graceOut))){
-            adjusted = dockOut;
-            }       
-        if ((original.after(graceOut)) && (original.before(intOut))) {
-            adjusted = shiftSo;
-        }
-        else{
-            int unroundedMinutes = original.get(Calendar.MINUTE);
-            int mod = unroundedMinutes % 15;
-            adjusted.add(Calendar.MINUTE, mod < 8 ? -mod : (15-mod));
-        }
         
         // Generate Gregorian Calendar Objects
         if ((day != Calendar.SATURDAY) && (day != Calendar.SUNDAY)){
             
             if (punchTypeId == 1) {
                 // Check Rules for clock in punches; Flip adjusted to True if rule applies
-                
-                
+                if((original.after(intIn)) && (original.before(graceIn))) {
+                    adjusted = shiftSa;
+                }
+                if((original.after(graceIn)) && (original.before(dockIn))) {
+                    adjusted = dockIn;
+                }
+                if((original.after(lunchIn)) && (original.before(lunchOut)) && (eventtypeid == 1)){
+                    adjusted = lunchOut;
+                }
             }
             else if (punchTypeId == 0) {
                 // Check Rules for clock out punches; Flip adjusted to True if rule applies
-                
+                if((original.after(lunchIn)) && (original.before(lunchOut)) && (eventtypeid == 0)){
+                    adjusted = lunchIn;
+                }
+                if ((original.after(dockOut)) && (original.before(graceOut))){
+                    adjusted = dockOut;
+                }       
+                if ((original.after(graceOut)) && (original.before(intOut))) {
+                    adjusted = shiftSo;
+                }
             }
         }
         if (!adj) {

@@ -22,6 +22,7 @@ public class Punch {
     private GregorianCalendar original;
     private GregorianCalendar adjusted;
     private String sdf;
+    private String sdf2;
     private int eventtypeid;
     private int punchTypeId;
     private int timestamp;
@@ -157,14 +158,17 @@ public class Punch {
                 if((original.after(intIn)) && (original.before(graceIn))) {
                     adjusted = shiftSa;
                     adj = true;
+                    eventData = "Shift Start";
                 }
                 if((original.after(graceIn)) && (original.before(dockIn))) {
                     adjusted = dockIn;
                     adj = true;
+                    eventData = "Shift Start";
                 }
                 if((original.after(lunchIn)) && (original.before(lunchOut)) && (eventtypeid == 1)){
                     adjusted = lunchOut;
                     adj = true;
+                    eventData = "Shift Start";
                 }
             }
             else if (punchTypeId == 0) {
@@ -172,14 +176,17 @@ public class Punch {
                 if((original.after(lunchIn)) && (original.before(lunchOut)) && (eventtypeid == 0)){
                     adjusted = lunchIn;
                     adj = true;
+                    eventData = "Shift Stop";
                 }
                 if ((original.after(dockOut)) && (original.before(graceOut))){
                     adjusted = dockOut;
                     adj = true;
+                    eventData = "Shift Stop";
                 }       
                 if ((original.after(graceOut)) && (original.before(intOut))) {
                     adjusted = shiftSo;
                     adj = true;
+                    eventData = "Shift Stop";
                 }
             }
         }
@@ -198,7 +205,8 @@ public class Punch {
             else {
                 eventData = "None";
             }
-        }// Apply adjustment to "ajustedtimestamp"
+        }// Apply adjustment to "ajustedtimestamp"\
+        sdf2 = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(adjusted.getTime()).toUpperCase();
     }
     
     
@@ -307,9 +315,16 @@ public class Punch {
     }
     
     public String printAdjustedTimestamp(){
-        String AdjustedTimeStamp = "Laugh";
+        String Status = "";
+        if (eventtypeid == 1) {
+            Status = " CLOCKED IN: ";
+        } else if (eventtypeid == 0) {
+            Status = " CLOCKED OUT: ";
+        } else {
+            Status = " TIMED OUT: ";
+        }
         
-        return null;
+        return "#" + badgeId + Status + sdf + eventData;
     }
 
 

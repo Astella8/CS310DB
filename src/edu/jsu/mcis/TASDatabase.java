@@ -25,7 +25,7 @@ public class TASDatabase {
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String u = "root";
-            String p = "root";
+            String p = "norris";
 
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas", u, p);
 

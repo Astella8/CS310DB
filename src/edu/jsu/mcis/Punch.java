@@ -26,6 +26,9 @@ public class Punch {
     private int eventtypeid;
     private int punchTypeId;
     private int timestamp;
+    private int startYear;
+    private int startMonth;
+    private int startDay;
 
     /**
      *
@@ -36,7 +39,7 @@ public class Punch {
      * @param adjustedts
      * @param eventtypeid
      */
-    public Punch(int terminalId, String badgeId, int shiftId, long originalts, long adjustedts, int eventtypeid) {
+    public Punch(int terminalId, String badgeId, int shiftId, long originalts, long adjustedts, int eventtypeid, int startYear, int startMonth, int startDay) {
         original = new GregorianCalendar();
         adjusted = new GregorianCalendar();
         originalts = (originalts * 1000);
@@ -48,6 +51,10 @@ public class Punch {
         this.shiftId = shiftId;
         this.eventtypeid = eventtypeid;
         this.eventData = "";
+        this.startYear = startYear;
+        this.startMonth = startMonth - 1;
+        this.startDay = startDay;
+        
         //String testdate =  format.format(adjusted.getTime());
         sdf = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(original.getTime()).toUpperCase();
         /*
@@ -137,36 +144,36 @@ public class Punch {
         
         
         GregorianCalendar currentgc = new GregorianCalendar();
-        GregorianCalendar shiftSa = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStartHour(), shift.getStartMinute()); //m1
-        GregorianCalendar shiftSo = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStopHour(), shift.getStopMinute()); //m2
-        GregorianCalendar intIn = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStartHour(), shift.getStartMinute()); //m3
+        GregorianCalendar shiftSa = new GregorianCalendar(startYear, startMonth, startDay, shift.getStartHour(), shift.getStartMinute()); //m1
+        GregorianCalendar shiftSo = new GregorianCalendar(startYear, startMonth, startDay, shift.getStopHour(), shift.getStopMinute()); //m2
+        GregorianCalendar intIn = new GregorianCalendar(startYear, startMonth, startDay, shift.getStartHour(), shift.getStartMinute()); //m3
         intIn.add(Calendar.MINUTE, -15);
-        GregorianCalendar dockIn = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStartHour(), shift.getStartMinute()); //m4
+        GregorianCalendar dockIn = new GregorianCalendar(startYear, startMonth, startDay, shift.getStartHour(), shift.getStartMinute()); //m4
         dockIn.add(Calendar.MINUTE, 15);
-        GregorianCalendar graceIn = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStartHour(), shift.getStartMinute()); //m5
+        GregorianCalendar graceIn = new GregorianCalendar(startYear, startMonth, startDay, shift.getStartHour(), shift.getStartMinute()); //m5
         graceIn.add(Calendar.MINUTE, 5);
-        GregorianCalendar dockOut = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStopHour(), shift.getStopMinute()); //m6
+        GregorianCalendar dockOut = new GregorianCalendar(startYear, startMonth, startDay, shift.getStopHour(), shift.getStopMinute()); //m6
         dockOut.add(Calendar.MINUTE, -15);
-        GregorianCalendar graceOut = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStopHour(), shift.getStopMinute()); //m7
+        GregorianCalendar graceOut = new GregorianCalendar(startYear, startMonth, startDay, shift.getStopHour(), shift.getStopMinute()); //m7
         graceOut.add(Calendar.MINUTE, -5);
-        GregorianCalendar intOut = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStopHour(), shift.getStopMinute()); //m8
+        GregorianCalendar intOut = new GregorianCalendar(startYear, startMonth, startDay, shift.getStopHour(), shift.getStopMinute()); //m8
         intOut.add(Calendar.MINUTE, 15);
-        GregorianCalendar lunchIn = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getLunchStartHour(), shift.getLunchStartMinute()); //m9
-        GregorianCalendar lunchOut = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getLunchStopHour(), shift.getLunchStopMinute()); //m10
+        GregorianCalendar lunchIn = new GregorianCalendar(startYear, startMonth, startDay, shift.getLunchStartHour(), shift.getLunchStartMinute()); //m9
+        GregorianCalendar lunchOut = new GregorianCalendar(startYear, startMonth, startDay, shift.getLunchStopHour(), shift.getLunchStopMinute()); //m10
         
         // Generate Gregorian Calendar Objects
         System.out.println("line 156 works");
         if ((day != Calendar.SATURDAY) && (day != Calendar.SUNDAY)){ 
             System.out.println("line 158 works");
             if (eventtypeid == 1) {
-                System.out.println(intIn);
-                System.out.println(graceIn);
-                System.out.println(original);
-                System.out.println(intIn.getTimeInMillis());
-                System.out.println(graceIn.getTimeInMillis());
-                System.out.println(original.getTimeInMillis());
-                System.out.println(original.before(graceIn));
-                System.out.println(original.after(intIn));
+//                System.out.println(intIn);
+//                System.out.println(graceIn);
+//                System.out.println(original);
+//                System.out.println(intIn.getTimeInMillis());
+//                System.out.println(graceIn.getTimeInMillis());
+//                System.out.println(original.getTimeInMillis());
+//                System.out.println(original.before(graceIn));
+//                System.out.println(original.after(intIn));
                 // Check Rules for clock in punches; Flip adjusted to True if rule applies
                 if(original.after(intIn) && (original.before(graceIn))) {
                     adjusted = shiftSa;

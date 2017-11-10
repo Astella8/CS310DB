@@ -125,6 +125,7 @@ public class Punch {
         return adjusted;
   }**/
     public void adjust(Shift shift) {
+        Calendar cal = new GregorianCalendar();
         boolean adj = false;
         GregorianCalendar gc = new GregorianCalendar();
         int punchMinute = original.get(Calendar.MINUTE);
@@ -134,51 +135,56 @@ public class Punch {
         adjustedMin = 0;
         adjusted = new GregorianCalendar();
         
+        
         GregorianCalendar currentgc = new GregorianCalendar();
-        GregorianCalendar shiftSa = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK, shift.getStartHour(), shift.getStartMinute()); //m1
-        GregorianCalendar shiftSo = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK, shift.getStopHour(), shift.getStopMinute()); //m2
-        GregorianCalendar intIn = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK, shift.getStartHour(), shift.getStartMinute()); //m3
+        GregorianCalendar shiftSa = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStartHour(), shift.getStartMinute()); //m1
+        GregorianCalendar shiftSo = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStopHour(), shift.getStopMinute()); //m2
+        GregorianCalendar intIn = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStartHour(), shift.getStartMinute()); //m3
         intIn.add(Calendar.MINUTE, -15);
-        GregorianCalendar dockIn = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK, shift.getStartHour(), shift.getStartMinute()); //m4
+        GregorianCalendar dockIn = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStartHour(), shift.getStartMinute()); //m4
         dockIn.add(Calendar.MINUTE, 15);
-        GregorianCalendar graceIn = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK, shift.getStartHour(), shift.getStartMinute()); //m5
+        GregorianCalendar graceIn = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStartHour(), shift.getStartMinute()); //m5
         graceIn.add(Calendar.MINUTE, 5);
-        GregorianCalendar dockOut = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK, shift.getStopHour(), shift.getStopMinute()); //m6
+        GregorianCalendar dockOut = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStopHour(), shift.getStopMinute()); //m6
         dockOut.add(Calendar.MINUTE, -15);
-        GregorianCalendar graceOut = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK, shift.getStopHour(), shift.getStopMinute()); //m7
+        GregorianCalendar graceOut = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStopHour(), shift.getStopMinute()); //m7
         graceOut.add(Calendar.MINUTE, -5);
-        GregorianCalendar intOut = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK, shift.getStopHour(), shift.getStopMinute()); //m8
+        GregorianCalendar intOut = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getStopHour(), shift.getStopMinute()); //m8
         intOut.add(Calendar.MINUTE, 15);
-        GregorianCalendar lunchIn = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK, shift.getLunchStartHour(), shift.getLunchStartMinute()); //m9
-        GregorianCalendar lunchOut = new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_WEEK, shift.getLunchStopHour(), shift.getLunchStopMinute()); //m10
+        GregorianCalendar lunchIn = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getLunchStartHour(), shift.getLunchStartMinute()); //m9
+        GregorianCalendar lunchOut = new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_WEEK), shift.getLunchStopHour(), shift.getLunchStopMinute()); //m10
         
         // Generate Gregorian Calendar Objects
         System.out.println("line 156 works");
         if ((day != Calendar.SATURDAY) && (day != Calendar.SUNDAY)){ 
             System.out.println("line 158 works");
             if (eventtypeid == 1) {
+                System.out.println(intIn);
+                System.out.println(graceIn);
                 System.out.println(original);
-                //System.out.println(graceIn);
-                //System.out.println(intIn);
-                //System.out.println((graceIn.before(original)));
+                System.out.println(intIn.getTimeInMillis());
+                System.out.println(graceIn.getTimeInMillis());
+                System.out.println(original.getTimeInMillis());
+                System.out.println(original.before(graceIn));
+                System.out.println(original.after(intIn));
                 // Check Rules for clock in punches; Flip adjusted to True if rule applies
-                if((original.before(intIn)) && (original.after(graceIn))) {
+                if(original.after(intIn) && (original.before(graceIn))) {
                     adjusted = shiftSa;
                     adj = true;
                     eventData = "Shift Start";
-                    System.out.println("line 166*********************************");
+                    System.out.println("line 166////////////////");
                 }
-                if((original.after(graceIn)) && (original.before(dockIn))) {
+                else if((original.after(graceIn)) && (original.before(dockIn))) {
                     adjusted = dockIn;
                     adj = true;
                     eventData = "Shift Docked";
-                    System.out.println("line 172");
+                    System.out.println("line 172****************");
                 }
-                if((original.after(lunchIn)) && (original.before(lunchOut))){
+                else if((original.after(lunchIn)) && (original.before(lunchOut))){
                     adjusted = lunchOut;
                     adj = true;
                     eventData = "Lunch Start";
-                    System.out.println("line 178");
+                    System.out.println("line 178...................");
                 }
                 else {
                     //System.out.println(original.before(graceIn));
@@ -191,12 +197,12 @@ public class Punch {
                     adj = true;
                     eventData = "Lunch Stop";
                 }
-                if ((original.after(dockOut)) && (original.before(graceOut))){
+                else if ((original.after(dockOut)) && (original.before(graceOut))){
                     adjusted = dockOut;
                     adj = true;
                     eventData = "Shift Docked";
                 }       
-                if ((original.after(graceOut)) && (original.before(intOut))) {
+                else if ((original.after(graceOut)) && (original.before(intOut))) {
                     adjusted = shiftSo;
                     adj = true;
                     eventData = "Shift Stop";

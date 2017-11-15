@@ -26,7 +26,7 @@ public class Shift {
     // Shift objects
     Shift(int shiftId, String desc, int lunchdeduct, int maxtime, int interval ,int startHour, int startMinute, int lunchStartHour, int lunchStartMinute, int lunchStopHour, int lunchStopMinute, int stopHour, int stopMinute) {
          this.shiftId = shiftId;
-        this.shiftDescription = shiftDescription;
+        this.shiftDescription = desc;
         this.gracePeriod = gracePeriod;
         this.dockTime = dockTime;
         this.lunchDeduct = lunchDeduct;
@@ -143,7 +143,7 @@ public class Shift {
     @Override
     public String toString() {
         String finalString;
-        finalString = (shiftDescription + ": " + startHour + startMinute + " - " + stopHour + stopMinute + " (510 minutes); Lunch: " + lunchStartHour + lunchStartMinute + " - " + lunchStopHour + lunchStopMinute + " (30 minutes)");
+        finalString = (shiftDescription + ": " + String.format("%02d", startHour) + ":" + String.format("%02d", startMinute) +" - " + String.format("%02d", stopHour)  + ":" + String.format("%02d", stopMinute)  + " (510 minutes); Lunch: " + String.format("%02d", lunchStartHour)  + ":"+ String.format("%02d", lunchStartMinute)  + " - " + String.format("%02d", lunchStopHour)  + ":" + String.format("%02d", lunchStopMinute)  + " (30 minutes)");
         return finalString;
-    }
+}
 }

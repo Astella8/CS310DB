@@ -222,9 +222,4 @@ public class TASDatabase {
         Shift s = db.getShift(1);
     }
 
-    int getMinutesAccrued(Punch p) {
-        
-        return 0;
-    }
-
 }

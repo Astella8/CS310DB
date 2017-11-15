@@ -1,6 +1,8 @@
 package edu.jsu.mcis;
 
 import java.sql.*;
+import java.util.*;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
@@ -212,6 +214,44 @@ public class TASDatabase {
         }
         return 0;
     }
+    
+     public int getMinutesAccrued(Punch p) {
+        
+        p = null;
+        
+        Deque s = new ArrayDeque();
+        
+        int j = s.size();
+        
+        for (int i = 0; i < j; ++i) {
+            
+            int punchType = p.geteventtypeid();
+            
+            if (punchType == 1 || punchType == 0) {
+                
+                
+                try {
+            Statement stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Event");
+
+            
+        } catch (SQLException e) {
+            System.err.println(e.toString());
+        }
+        return s;
+
+                
+                s.add(p.getOriginaltimestamp());
+                
+            }
+            
+        }
+        
+        return 0;
+    }
+     
+    
     /**
      * Main function creates database connection the runs test.
      *
@@ -221,5 +261,7 @@ public class TASDatabase {
         TASDatabase db = new TASDatabase();
         Shift s = db.getShift(1);
     }
+    
+   
 
 }

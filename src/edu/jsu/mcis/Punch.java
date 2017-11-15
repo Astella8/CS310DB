@@ -97,39 +97,24 @@ public class Punch {
         intOut.add(Calendar.MINUTE, 15);
         GregorianCalendar lunchIn = new GregorianCalendar(startYear, startMonth, startDay, shift.getLunchStartHour(), shift.getLunchStartMinute()); //m9
         GregorianCalendar lunchOut = new GregorianCalendar(startYear, startMonth, startDay, shift.getLunchStopHour(), shift.getLunchStopMinute()); //m10
-        sdf2 = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(graceIn.getTime()).toUpperCase();
-        System.out.println(sdf2);
-        sdf2 = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(dockIn.getTime()).toUpperCase();
-                System.out.println(sdf2);
-                sdf2 = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(original.getTime()).toUpperCase();
-                        System.out.println(sdf2);
-
-
-        
-        
         // Generate Gregorian Calendar Objects
-        System.out.println("line 156 works");
         if ((day != Calendar.SATURDAY) && (day != Calendar.SUNDAY)){ 
-            System.out.println("line 158 works");
             if (eventtypeid == 1) {
                 // Check Rules for clock in punches; Flip adjusted to True if rule applies
                 if(original.after(intIn) && (original.before(graceIn))) {
                     adjusted = shiftSa;
                     adj = true;
                     eventData = "Shift Start";
-                    System.out.println("line 166////////////////");
                 }
-                else if((original.after(graceIn)) && (original.before(dockIn))) {
+                else if((original.getTimeInMillis() > graceIn.getTimeInMillis()) && (original.getTimeInMillis() <= dockIn.getTimeInMillis())) {
                     adjusted = dockIn;
                     adj = true;
                     eventData = "Shift Dock";
-                    System.out.println("line 172****************");
                 }
                 else if((original.after(lunchIn)) && (original.before(lunchOut))){
                     adjusted = lunchOut;
                     adj = true;
                     eventData = "Lunch Stop";
-                    System.out.println("line 178...................");
                 }
                 else {
                     //System.out.println(original.before(graceIn));
@@ -142,8 +127,7 @@ public class Punch {
                     adj = true;
                     eventData = "Lunch Start";
                 }
-                /////////////////////////////////////////////////////////////////////////////////////////////////
-                else if ((original.after(graceIn)) && (original.before(dockIn))){
+                else if ((original.getTimeInMillis() <= graceOut.getTimeInMillis()) && (original.getTimeInMillis() >= dockOut.getTimeInMillis())){
                     
                     adjusted = dockOut;
                     adj = true;
@@ -163,9 +147,6 @@ public class Punch {
                 if (punchMinute % interval < (interval/2)) {
 
                     adjustedMin = (Math.round(punchMinute / interval) * interval); // Round DOWN
-                    System.out.println(interval);
-                    System.out.println(punchMinute);
-                    System.out.println(adjustedMin);
                     adjusted.add(Calendar.MINUTE,(adjustedMin - punchMinute)); 
                 adjusted.set(Calendar.SECOND,0);
                 }
@@ -182,6 +163,7 @@ public class Punch {
             }
             else {
                 eventData = "None";
+                
             }
         }// Apply adjustment to "ajustedtimestamp"\
         sdf2 = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(adjusted.getTime()).toUpperCase();

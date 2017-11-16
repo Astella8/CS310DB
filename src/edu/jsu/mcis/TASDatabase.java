@@ -27,7 +27,7 @@ public class TASDatabase {
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String u = "root";
-            String p = "norris";
+            String p = "root";
 
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas", u, p);
 
@@ -93,7 +93,7 @@ public class TASDatabase {
                 int startMonth = rs.getInt(6);
                 int startDay = rs.getInt(7);
                 int adjusted = 0;
-                p = new Punch(terminalId, badgeId, shiftId, original, adjusted, eventTypeId, startYear, startMonth,startDay);
+                p = new Punch(terminalId, badgeId, shiftId, original, adjusted, eventTypeId, startYear, startMonth, startDay);
 
             }
         } catch (SQLException e) {
@@ -118,11 +118,11 @@ public class TASDatabase {
         try {
             Statement stmt = conn.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT *,Hour(start) as StartHour, Minute(start) as StartMinute\n" +
-            ",Hour(lunchstart) as LunchStartHour, Minute(lunchstart) as LunchStartMinute\n" +
-            ",Hour(lunchstop) as LunchStopHour, Minute(lunchstop) as LunchStopMinute\n" +
-            ",Hour(stop) as StopHour, Minute(stop) as StopMinute\n" +
-            "FROM tas.shift s WHERE id = '" + id + "'");
+            ResultSet rs = stmt.executeQuery("SELECT *,Hour(start) as StartHour, Minute(start) as StartMinute\n"
+                    + ",Hour(lunchstart) as LunchStartHour, Minute(lunchstart) as LunchStartMinute\n"
+                    + ",Hour(lunchstop) as LunchStopHour, Minute(lunchstop) as LunchStopMinute\n"
+                    + ",Hour(stop) as StopHour, Minute(stop) as StopMinute\n"
+                    + "FROM tas.shift s WHERE id = '" + id + "'");
 
             while (rs.next()) {
                 int shiftId = rs.getInt(1);
@@ -182,24 +182,24 @@ public class TASDatabase {
         }
         return key;
     }
-    public int updateQuery(int id, GregorianCalendar adjusted, String eventdata){
+
+    public int updateQuery(int id, GregorianCalendar adjusted, String eventdata) {
         Statement stmt = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         ResultSet generatedKeys = null;
         String query, update;
-        int result=0, key=0;
-        try{
-            stmt=conn.createStatement();
-            update="update event set adjustedtimestamp='" + adjusted + ", eventdata = " + eventdata + "'where id='" + id +"'";        
-        
+        int result = 0, key = 0;
+        try {
+            stmt = conn.createStatement();
+            update = "update event set adjustedtimestamp='" + adjusted + ", eventdata = " + eventdata + "'where id='" + id + "'";
+
         } catch (SQLException ex) {
             Logger.getLogger(TASDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
-        
+
     }
-    
 
     public int getClockTimes(String id) {
         try {
@@ -214,44 +214,30 @@ public class TASDatabase {
         }
         return 0;
     }
-    
-     public int getMinutesAccrued(Punch p) {
-        
-        p = null;
-        
+
+    public int getMinutesAccrued(Punch p) {
+        String badgeid = p.getBadgeId();
+        GregorianCalendar OTS = p.getOriginaltimestamp();
+        String sdf = new SimpleDateFormat("YYY-MM-dd").format(OTS.getTime());
+        String state = "SELECT * FROM event WHERE badgeid='" + badgeid + "' AND originaltimestamp LIKE '" + sdf + "%';";
         Deque s = new ArrayDeque();
-        
         int j = s.size();
-        
         for (int i = 0; i < j; ++i) {
-            
             int punchType = p.geteventtypeid();
-            
             if (punchType == 1 || punchType == 0) {
-                
-                
                 try {
-            Statement stmt = conn.createStatement();
-
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Event");
-
-            
-        } catch (SQLException e) {
-            System.err.println(e.toString());
-        }
-        return s;
-
-                
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(state);
+                } catch (SQLException e) {
+                    System.err.println(e.toString());
+                }
                 s.add(p.getOriginaltimestamp());
-                
             }
-            
         }
-        
+        System.out.println(state);
         return 0;
     }
-     
-    
+
     /**
      * Main function creates database connection the runs test.
      *
@@ -261,7 +247,5 @@ public class TASDatabase {
         TASDatabase db = new TASDatabase();
         Shift s = db.getShift(1);
     }
-    
-   
 
 }

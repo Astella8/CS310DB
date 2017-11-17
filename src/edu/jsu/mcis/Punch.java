@@ -140,14 +140,13 @@ public class Punch {
                     adjustedMin = (Math.round(punchMinute / interval) * interval); // Round DOWN
                     adjusted.add(Calendar.MINUTE, (adjustedMin - punchMinute));
                     adjusted.set(Calendar.SECOND, 0);
+                    System.out.println("If");
                 } else {
-                    adjusted = original;
-                    adjustedMin = (Math.round(punchMinute / interval) * interval + interval);//Round Up
+                    adjustedMin = ((Math.round(punchMinute / interval) * interval) + interval);//Round Up
                     adjusted.add(Calendar.MINUTE, (adjustedMin - punchMinute));
                     adjusted.set(Calendar.SECOND, 0);
+                    System.out.println("Else");
                 }
-
-                adjusted.set(Calendar.SECOND, 0);
                 eventData = "Interval Round";
             } else {
                 eventData = "None";

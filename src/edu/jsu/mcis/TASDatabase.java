@@ -27,7 +27,7 @@ public class TASDatabase {
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String u = "root";
-            String p = "norris";
+            String p = "root";
 
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas", u, p);
 
@@ -94,14 +94,11 @@ public class TASDatabase {
                 int startDay = rs.getInt(7);
                 int adjusted = 0;
                 p = new Punch(terminalId, badgeId, shiftId, original, adjusted, eventTypeId, startYear, startMonth, startDay);
-
             }
         } catch (SQLException e) {
             System.err.println(e.toString());
         }
-
         return p;
-
     }
     
     public int getShiftByBadge(String badgeid) {

@@ -27,7 +27,7 @@ public class TASDatabase {
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String u = "root";
-            String p = "root";
+            String p = "norris";
 
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas", u, p);
 
@@ -101,6 +101,26 @@ public class TASDatabase {
         }
 
         return p;
+
+    }
+    
+    public int getShiftByBadge(String badgeid) {
+
+        int shiftid = -1;
+
+        try {
+
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT shiftid FROM employee WHERE badgeid = '" + badgeid + "'");
+            while (rs.next()) {
+                shiftid = rs.getInt(1);
+                
+            }
+        } catch (SQLException e) {
+            System.err.println(e.toString());
+        }
+
+        return shiftid;
 
     }
 
@@ -215,36 +235,63 @@ public class TASDatabase {
         return 0;
     }
     
-    public int getMinutesAccrued(Punch p) {
-        String badgeid = p.getBadgeId();
-        GregorianCalendar OTS = p.getOriginaltimestamp();
-        String sdf = new SimpleDateFormat("YYY-MM-dd").format(OTS.getTime());
-        Deque s = new ArrayDeque();
-        int j = s.size();
-        
+    private ArrayList<Punch> getPunchList(String badgeid, String sdf) {
+        Punch newPunch = null;
+        ArrayList<Punch> punchList = new ArrayList<>();
         try {
             Statement stmt = conn.createStatement();
-            String state = "SELECT * FROM event WHERE badgeid='" + badgeid + "' AND originaltimestamp LIKE '" + sdf + "%';";
+            String state = "SELECT *, UNIX_TIMESTAMP(originaltimestamp) FROM event WHERE badgeid='" + badgeid + "' AND originaltimestamp LIKE '" + sdf + "%' ORDER BY originaltimestamp;";
             ResultSet rs = stmt.executeQuery(state);
-           
                 while(rs.next()){
-                   Timestamp timestamp = rs.getTimestamp("originaltimestamp");
-                   s.add(timestamp);
+                   int id = rs.getInt(1);
+                   int terminalid = rs.getInt(2);
+                   int eventtypeid = rs.getInt(5);
+                   String eventdata = rs.getString(6);
+                   long unixots = rs.getLong(8);
+                   newPunch = new Punch(badgeid, terminalid, eventtypeid);
+                   newPunch.setPunchId(String.valueOf(id));
+                   newPunch.getOriginaltimestamp().setTimeInMillis(unixots * 1000);
+                   newPunch.getAdjustedTimeStamp().setTimeInMillis(0);
+                   punchList.add(newPunch);
                 }
         }
         catch (SQLException ex){
+        }
+        return punchList;
+    }
+    
+    public int getMinutesAccrued(Punch p) {
+        String badgeid = p.getBadgeId();
+        GregorianCalendar OTS = p.getOriginaltimestamp();
+        String sdf = new SimpleDateFormat("YYYY-MM-dd").format(OTS.getTime());
+        Deque s = new ArrayDeque();
+        Punch newPunch = null;
+        int shiftid = getShiftByBadge(badgeid);
+        boolean inBlock = false;
+        int totalMinutes = 0;
+        long difference = 0;
+        ArrayList<Punch> punchList = getPunchList(badgeid, sdf);
+        for (int i = 0; i < punchList.size(); ++i) {
+            punchList.get(i).adjust(getShift(shiftid));
+            System.out.println(punchList.get(i).printOriginalTimestamp() + "->" + punchList.get(i).printAdjustedTimestamp());
+             
+        }
+        for (int i = 0; i < punchList.size(); ++i) {
+            if ((punchList.get(i).getPunchTypeId() == 1) && !(inBlock)) {
+                inBlock = true;
+                difference = punchList.get(i).getOriginaltimestamp().getTimeInMillis();
+            }
+            if ((punchList.get(i).getPunchTypeId() == 0) && (inBlock)) {
+                inBlock = false;
+                difference = punchList.get(i).getOriginaltimestamp().getTimeInMillis() - difference;
+                totalMinutes += difference / 60000;
+            }
+            if ((punchList.get(i).getPunchTypeId() == 2) && (inBlock)) {
+                inBlock = false;
+            }
             
         }
-      
-        for (int i = 0; i < j; ++i) {
-            int punchType = p.geteventtypeid();
-            if (punchType == 1 || punchType == 0) {
-               
-                //s.add(p.getOriginaltimestamp());
-            }
-        }
-        System.out.println(s);
-        return 0;
+        return totalMinutes;
     }
 
     /**
@@ -254,7 +301,11 @@ public class TASDatabase {
      */
     public static void main(String args[]) {
         TASDatabase db = new TASDatabase();
-        Shift s = db.getShift(1);
+        //int shiftid = db.getShiftByBadge("28DC3FB8");
+        //System.out.println(shiftid);
+        Punch p = db.getPunch(3634);
+        int minutes = db.getMinutesAccrued(p);
+        System.out.println(minutes);
     }
 
 }

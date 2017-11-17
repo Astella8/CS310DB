@@ -21,8 +21,6 @@ public class Punch {
     private int terminalId;
     private GregorianCalendar original;
     private GregorianCalendar adjusted;
-    private String sdf;
-    private String sdf2;
     private int eventtypeid;
     private int punchTypeId;
     private int timestamp;
@@ -56,13 +54,13 @@ public class Punch {
         this.startDay = startDay;
         
         //String testdate =  format.format(adjusted.getTime());
-        sdf = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(original.getTime()).toUpperCase();
     }
 
     public Punch(String badgeId, int terminalId, int punchTypeId){
         this.badgeId = badgeId;
         this.terminalId = terminalId;
-        this.punchTypeId = 0;
+        this.eventtypeid = punchTypeId;
+        this.punchTypeId = punchTypeId;
         original = new GregorianCalendar();
         adjusted = new GregorianCalendar();
         
@@ -151,8 +149,7 @@ public class Punch {
                 adjusted.set(Calendar.SECOND,0);
                 }
                 else {
-                            adjusted = original;
-
+                    adjusted = original;
                     adjustedMin = (Math.round(punchMinute / interval) * interval + interval);//Round Up
                     adjusted.add(Calendar.MINUTE,(adjustedMin - punchMinute)); 
                 adjusted.set(Calendar.SECOND,0);
@@ -166,7 +163,6 @@ public class Punch {
                 
             }
         }// Apply adjustment to "ajustedtimestamp"\
-        sdf2 = new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(adjusted.getTime()).toUpperCase();
     }
     
     
@@ -271,7 +267,7 @@ public class Punch {
         } else {
             Status = " TIMED OUT: ";
         }
-        return "#" + badgeId + Status + sdf;
+        return "#" + badgeId + Status + new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(original.getTime()).toUpperCase();
     }
     
     public String printAdjustedTimestamp(){
@@ -284,7 +280,7 @@ public class Punch {
             Status = " TIMED OUT: ";
         }
         
-        return "#" + badgeId + Status + sdf2 +" (" + eventData + ")";
+        return "#" + badgeId + Status + new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(adjusted.getTime()).toUpperCase() +" (" + eventData + ")";
     }
 
 

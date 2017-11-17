@@ -146,13 +146,15 @@ public class Punch {
 
                     adjustedMin = (Math.round(punchMinute / interval) * interval); // Round DOWN
                     adjusted.add(Calendar.MINUTE,(adjustedMin - punchMinute)); 
-                adjusted.set(Calendar.SECOND,0);
+                    adjusted.set(Calendar.SECOND,0);
+                    adj = true;
                 }
                 else {
                     adjusted = original;
                     adjustedMin = (Math.round(punchMinute / interval) * interval + interval);//Round Up
                     adjusted.add(Calendar.MINUTE,(adjustedMin - punchMinute)); 
-                adjusted.set(Calendar.SECOND,0);
+                    adjusted.set(Calendar.SECOND,0);
+                    adj = true;
                 }
                 
                 adjusted.set(Calendar.SECOND,0);

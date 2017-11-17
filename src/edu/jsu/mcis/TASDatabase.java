@@ -261,11 +261,13 @@ public class TASDatabase {
         String badgeid = p.getBadgeId();
         GregorianCalendar OTS = p.getOriginaltimestamp();
         String sdf = new SimpleDateFormat("YYYY-MM-dd").format(OTS.getTime());
-        Deque s = new ArrayDeque();
         Punch newPunch = null;
         int shiftid = getShiftByBadge(badgeid);
         Shift s1 = getShift(shiftid);
         boolean inBlock = false;
+        boolean lunchTime = false;
+        int max = s1.getMaxTime();
+        int lunchDeduct = s1.getLunchDeduct();
         int totalMinutes = 0;
         long difference = 0;
         ArrayList<Punch> punchList = getPunchList(badgeid, sdf);
@@ -285,6 +287,13 @@ public class TASDatabase {
             }
             if ((punchList.get(i).getPunchTypeId() == 2) && (inBlock)) {
                 inBlock = false;
+            }
+            if (totalMinutes >= max) {
+                totalMinutes = totalMinutes - lunchDeduct;
+                System.out.println(difference);
+                System.out.println(totalMinutes);
+                System.out.println(max);
+                lunchTime = true;
             }
             
         }

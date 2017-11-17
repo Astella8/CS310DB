@@ -285,7 +285,8 @@ public class TASDatabase {
             }
             if ((punchList.get(i).getPunchTypeId() == 2) && (inBlock)) {
                 inBlock = false;
-            }  
+            }
+            
         }
         return totalMinutes;
     }

@@ -73,7 +73,6 @@ public class Punch {
         int day = original.get(Calendar.DAY_OF_WEEK);
         int adjustedMin;
         adjustedMin = 0;
-        GregorianCalendar currentgc = new GregorianCalendar();
         GregorianCalendar shiftSa = new GregorianCalendar(startYear, startMonth, startDay, shift.getStartHour(), shift.getStartMinute()); //m1
         GregorianCalendar shiftSo = new GregorianCalendar(startYear, startMonth, startDay, shift.getStopHour(), shift.getStopMinute()); //m2
         GregorianCalendar intIn = new GregorianCalendar(startYear, startMonth, startDay, shift.getStartHour(), shift.getStartMinute()); //m3

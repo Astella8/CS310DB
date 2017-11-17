@@ -39,10 +39,11 @@ public class Punch {
      */
     public Punch(int terminalId, String badgeId, int shiftId, long originalts, long adjustedts, int eventtypeid, int startYear, int startMonth, int startDay) {
         original = new GregorianCalendar();
+        adjusted = new GregorianCalendar();
         originalts = (originalts * 1000);
         adjustedts = (originalts * 1000);
         original.setTimeInMillis(originalts);
-        adjusted = original;
+        adjusted.setTimeInMillis(adjustedts);
         this.terminalId = terminalId;
         this.badgeId = badgeId;
         this.shiftId = shiftId;
@@ -61,6 +62,7 @@ public class Punch {
         this.eventtypeid = punchTypeId;
         this.punchTypeId = punchTypeId;
         original = new GregorianCalendar();
+        adjusted = new GregorianCalendar();
 
     }
 
@@ -76,6 +78,10 @@ public class Punch {
         
         long originalpunch = original.getTimeInMillis();
         long adjustedpunch = originalpunch;
+        adjusted.setTimeInMillis(adjustedpunch);
+        startYear = original.get(Calendar.YEAR);
+        startMonth = original.get(Calendar.MONTH);
+        startDay = original.get(Calendar.DAY_OF_MONTH);
         
         GregorianCalendar shiftSa = new GregorianCalendar(startYear, startMonth, startDay, shift.getStartHour(), shift.getStartMinute()); //m1
         long shiftstart = shiftSa.getTimeInMillis();
@@ -169,12 +175,15 @@ public class Punch {
                     adjustedMin = ((Math.round(punchMinute / interval) * interval) + interval);//Round Up
 
                 }
+                adjusted.add(Calendar.MINUTE, adjustedMin - punchMinute);
+                adjusted.set(Calendar.SECOND, 0);
+                adjustedpunch = adjusted.getTimeInMillis();
                 eventData = "Interval Round";
             } else {
                 eventData = "None";
-
             }
         }// Apply adjustment to "ajustedtimestamp"\
+        adjusted.setTimeInMillis(adjustedpunch);
     }
 
     /**

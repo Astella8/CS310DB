@@ -27,7 +27,7 @@ public class TASDatabase {
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String u = "root";
-            String p = "root";
+            String p = "norris";
 
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tas", u, p);
 
@@ -264,29 +264,28 @@ public class TASDatabase {
         Deque s = new ArrayDeque();
         Punch newPunch = null;
         int shiftid = getShiftByBadge(badgeid);
+        Shift s1 = getShift(shiftid);
         boolean inBlock = false;
         int totalMinutes = 0;
         long difference = 0;
         ArrayList<Punch> punchList = getPunchList(badgeid, sdf);
         for (int i = 0; i < punchList.size(); ++i) {
-            punchList.get(i).adjust(getShift(shiftid));
+            punchList.get(i).adjust(s1);
             System.out.println(punchList.get(i).printOriginalTimestamp() + "->" + punchList.get(i).printAdjustedTimestamp());
-             
         }
         for (int i = 0; i < punchList.size(); ++i) {
             if ((punchList.get(i).getPunchTypeId() == 1) && !(inBlock)) {
                 inBlock = true;
-                difference = punchList.get(i).getOriginaltimestamp().getTimeInMillis();
+                difference = punchList.get(i).getAdjustedTimeStamp().getTimeInMillis();
             }
             if ((punchList.get(i).getPunchTypeId() == 0) && (inBlock)) {
                 inBlock = false;
-                difference = punchList.get(i).getOriginaltimestamp().getTimeInMillis() - difference;
+                difference = punchList.get(i).getAdjustedTimeStamp().getTimeInMillis() - difference;
                 totalMinutes += difference / 60000;
             }
             if ((punchList.get(i).getPunchTypeId() == 2) && (inBlock)) {
                 inBlock = false;
-            }
-            
+            }  
         }
         return totalMinutes;
     }
@@ -301,8 +300,14 @@ public class TASDatabase {
         //int shiftid = db.getShiftByBadge("28DC3FB8");
         //System.out.println(shiftid);
         Punch p = db.getPunch(3634);
+        Shift s1 = db.getShift(1);
+        p.adjust(s1);
+        System.out.println(p.printOriginalTimestamp());
+        System.out.println(p.printAdjustedTimestamp());
         int minutes = db.getMinutesAccrued(p);
         System.out.println(minutes);
+        //System.out.println(p.printOriginalTimestamp());
+        //System.out.println(p.printAdjustedTimestamp());
     }
 
 }

@@ -214,27 +214,36 @@ public class TASDatabase {
         }
         return 0;
     }
-
+    
     public int getMinutesAccrued(Punch p) {
         String badgeid = p.getBadgeId();
         GregorianCalendar OTS = p.getOriginaltimestamp();
         String sdf = new SimpleDateFormat("YYY-MM-dd").format(OTS.getTime());
-        String state = "SELECT * FROM event WHERE badgeid='" + badgeid + "' AND originaltimestamp LIKE '" + sdf + "%';";
         Deque s = new ArrayDeque();
         int j = s.size();
+        
+        try {
+            Statement stmt = conn.createStatement();
+            String state = "SELECT * FROM event WHERE badgeid='" + badgeid + "' AND originaltimestamp LIKE '" + sdf + "%';";
+            ResultSet rs = stmt.executeQuery(state);
+           
+                while(rs.next()){
+                   Timestamp timestamp = rs.getTimestamp("originaltimestamp");
+                   s.add(timestamp);
+                }
+        }
+        catch (SQLException ex){
+            
+        }
+      
         for (int i = 0; i < j; ++i) {
             int punchType = p.geteventtypeid();
             if (punchType == 1 || punchType == 0) {
-                try {
-                    Statement stmt = conn.createStatement();
-                    ResultSet rs = stmt.executeQuery(state);
-                } catch (SQLException e) {
-                    System.err.println(e.toString());
-                }
-                s.add(p.getOriginaltimestamp());
+               
+                //s.add(p.getOriginaltimestamp());
             }
         }
-        System.out.println(state);
+        System.out.println(s);
         return 0;
     }
 

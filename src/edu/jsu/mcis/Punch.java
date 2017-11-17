@@ -73,62 +73,89 @@ public class Punch {
         int day = original.get(Calendar.DAY_OF_WEEK);
         int adjustedMin;
         adjustedMin = 0;
+        
+        long originalpunch = original.getTimeInMillis();
+        long adjustedpunch = originalpunch;
+        
         GregorianCalendar shiftSa = new GregorianCalendar(startYear, startMonth, startDay, shift.getStartHour(), shift.getStartMinute()); //m1
+        long shiftstart = shiftSa.getTimeInMillis();
+        
         GregorianCalendar shiftSo = new GregorianCalendar(startYear, startMonth, startDay, shift.getStopHour(), shift.getStopMinute()); //m2
+        long shiftstop = shiftSo.getTimeInMillis();
+        
         GregorianCalendar intIn = new GregorianCalendar(startYear, startMonth, startDay, shift.getStartHour(), shift.getStartMinute()); //m3
         intIn.add(Calendar.MINUTE, -15);
+        long intervalstart = intIn.getTimeInMillis();
+        
         GregorianCalendar dockIn = new GregorianCalendar(startYear, startMonth, startDay, shift.getStartHour(), shift.getStartMinute()); //m4
         dockIn.add(Calendar.MINUTE, 15);
+        long dockstart = dockIn.getTimeInMillis();
+        
         GregorianCalendar graceIn = new GregorianCalendar(startYear, startMonth, startDay, shift.getStartHour(), shift.getStartMinute()); //m5
         graceIn.add(Calendar.MINUTE, 5);
+        long gracestart = graceIn.getTimeInMillis();
+        
         GregorianCalendar dockOut = new GregorianCalendar(startYear, startMonth, startDay, shift.getStopHour(), shift.getStopMinute()); //m6
         dockOut.add(Calendar.MINUTE, -15);
+        long dockstop = dockOut.getTimeInMillis();
+        
         GregorianCalendar graceOut = new GregorianCalendar(startYear, startMonth, startDay, shift.getStopHour(), shift.getStopMinute()); //m7
         graceOut.add(Calendar.MINUTE, -5);
+        long gracestop = graceOut.getTimeInMillis();
+        
         GregorianCalendar intOut = new GregorianCalendar(startYear, startMonth, startDay, shift.getStopHour(), shift.getStopMinute()); //m8
         intOut.add(Calendar.MINUTE, 15);
+        long intervalstop = intOut.getTimeInMillis();
+        
         GregorianCalendar lunchIn = new GregorianCalendar(startYear, startMonth, startDay, shift.getLunchStartHour(), shift.getLunchStartMinute()); //m9
+        long lunchstart = lunchIn.getTimeInMillis();
+        
         GregorianCalendar lunchOut = new GregorianCalendar(startYear, startMonth, startDay, shift.getLunchStopHour(), shift.getLunchStopMinute()); //m10
+        long lunchstop = lunchOut.getTimeInMillis();
+        
         // Generate Gregorian Calendar Objects
         if ((day != Calendar.SATURDAY) && (day != Calendar.SUNDAY)) {
             if (eventtypeid == 1) {
                 // Check Rules for clock in punches; Flip adjusted to True if rule applies
-                if (original.after(intIn) && (original.before(graceIn))) {
-                    adjusted = shiftSa;
+                if ((originalpunch >= intervalstart) && (originalpunch <= shiftstart)) {
+                    adjustedpunch = shiftstart;
                     adj = true;
                     eventData = "Shift Start";
-                    System.out.println(eventData);
-                } else if ((original.getTimeInMillis() > graceIn.getTimeInMillis()) && (original.getTimeInMillis() <= dockIn.getTimeInMillis())) {
-                    adjusted = dockIn;
+                } 
+                else if ((originalpunch > shiftstart) && (originalpunch <= gracestart)) {
+                    adjustedpunch = shiftstart;
+                    adj = true;
+                    eventData = "Shift Start";
+                }
+                else if ((originalpunch > gracestart) && (originalpunch <= dockstart)) {
+                    adjustedpunch = dockstart;
                     adj = true;
                     eventData = "Shift Dock";
-                    System.out.println(eventData);
-                } else if ((original.after(lunchIn)) && (original.before(lunchOut))) {
-                    adjusted = lunchOut;
+                }
+                else if ((originalpunch >= lunchstart) && (originalpunch <= lunchstop)) {
+                    adjustedpunch = lunchstop;
                     adj = true;
                     eventData = "Lunch Stop";
-                    System.out.println(eventData);
-                } else {
-
                 }
             } else if (eventtypeid == 0) {
                 // Check Rules for clock out punches; Flip adjusted to True if rule applies
-                if ((original.after(lunchIn)) && (original.before(lunchOut))) {
-                    adjusted = lunchIn;
+                if ((originalpunch > lunchstart) && (originalpunch <= lunchstop)) {
+                    adjustedpunch = lunchstart;
                     adj = true;
                     eventData = "Lunch Start";
-                    System.out.println(eventData);
-                } else if ((original.getTimeInMillis() <= graceOut.getTimeInMillis()) && (original.getTimeInMillis() >= dockOut.getTimeInMillis())) {
-
-                    adjusted = dockOut;
+                } else if ((originalpunch >= dockstop) && (originalpunch < gracestop)) {
+                    adjustedpunch = dockstop;
                     adj = true;
                     eventData = "Shift Dock";
-                    System.out.println(eventData);
-                } else if ((original.after(graceOut)) && (original.before(intOut))) {
-                    adjusted = shiftSo;
+                }
+                else if ((originalpunch >= gracestop) && (originalpunch < shiftstop)) {
+                    adjustedpunch = shiftstop;
                     adj = true;
                     eventData = "Shift Stop";
-                    
+                } else if ((originalpunch >= shiftstop) && (originalpunch <= intervalstop)) {
+                    adjustedpunch = shiftstop;
+                    adj = true;
+                    eventData = "Shift Stop";   
                 }
             }
         }
@@ -137,14 +164,10 @@ public class Punch {
             if (punchMinute % interval != 0) {
                 if (punchMinute % interval < (interval / 2)) {
                     adjustedMin = (Math.round(punchMinute / interval) * interval); // Round DOWN
-                    adjusted.add(Calendar.MINUTE, (adjustedMin - punchMinute));
-                    adjusted.set(Calendar.SECOND, 0);
-                    System.out.println("If");
+                    
                 } else {
                     adjustedMin = ((Math.round(punchMinute / interval) * interval) + interval);//Round Up
-                    adjusted.add(Calendar.MINUTE, (adjustedMin - punchMinute));
-                    adjusted.set(Calendar.SECOND, 0);
-                    System.out.println("Else");
+
                 }
                 eventData = "Interval Round";
             } else {

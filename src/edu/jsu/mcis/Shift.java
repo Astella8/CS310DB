@@ -29,7 +29,7 @@ public class Shift {
         this.shiftDescription = desc;
         this.gracePeriod = gracePeriod;
         this.dockTime = dockTime;
-        this.lunchDeduct = lunchDeduct;
+        this.lunchDeduct = lunchdeduct;
         this.maxTime = maxTime;
         this.interval = interval;
         this.overtimeThreshold = overtimeThreshold;

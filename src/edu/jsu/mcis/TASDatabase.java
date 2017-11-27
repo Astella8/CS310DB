@@ -268,6 +268,7 @@ public class TASDatabase {
         boolean lunchTime = false;
         int max = s1.getMaxTime();
         int lunchDeduct = s1.getLunchDeduct();
+        System.out.println(lunchDeduct);
         int totalMinutes = 0;
         long difference = 0;
         ArrayList<Punch> punchList = getPunchList(badgeid, sdf);
@@ -288,14 +289,13 @@ public class TASDatabase {
             if ((punchList.get(i).getPunchTypeId() == 2) && (inBlock)) {
                 inBlock = false;
             }
-            if (totalMinutes >= max) {
-                totalMinutes = totalMinutes - lunchDeduct;
-                System.out.println(difference);
-                System.out.println(totalMinutes);
-                System.out.println(max);
+            if (totalMinutes >= lunchDeduct) {
+                totalMinutes = totalMinutes - 30;
+                //System.out.println(difference);
+                //System.out.println(totalMinutes);
+                //System.out.println(max);
                 lunchTime = true;
             }
-            
         }
         return totalMinutes;
     }
@@ -309,13 +309,13 @@ public class TASDatabase {
         TASDatabase db = new TASDatabase();
         //int shiftid = db.getShiftByBadge("28DC3FB8");
         //System.out.println(shiftid);
-        Punch p = db.getPunch(3634);
-        Shift s1 = db.getShift(1);
-        p.adjust(s1);
-        System.out.println(p.printOriginalTimestamp());
-        System.out.println(p.printAdjustedTimestamp());
-        int minutes = db.getMinutesAccrued(p);
-        System.out.println(minutes);
+        //Punch p = db.getPunch(3634);
+        //Shift s1 = db.getShift(1);
+        //p.adjust(s1);
+        //System.out.println(p.printOriginalTimestamp());
+        //System.out.println(p.printAdjustedTimestamp());
+        //int minutes = db.getMinutesAccrued(p);
+        //System.out.println(lunchDeduct);
         //System.out.println(p.printOriginalTimestamp());
         //System.out.println(p.printAdjustedTimestamp());
     }

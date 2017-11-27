@@ -217,6 +217,12 @@ public class Punch {
         return punchId;
     }
 
+    
+    public String geteventData(){
+        return eventData;
+    }
+    
+    
     /**
      *
      * @param punchId

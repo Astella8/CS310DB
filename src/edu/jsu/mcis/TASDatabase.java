@@ -268,7 +268,7 @@ public class TASDatabase {
         boolean lunchTime = false;
         int max = s1.getMaxTime();
         int lunchDeduct = s1.getLunchDeduct();
-        System.out.println(lunchDeduct);
+        //System.out.println(lunchDeduct);
         int totalMinutes = 0;
         long difference = 0;
         ArrayList<Punch> punchList = getPunchList(badgeid, sdf);
@@ -276,25 +276,29 @@ public class TASDatabase {
             punchList.get(i).adjust(s1);
             System.out.println(punchList.get(i).printOriginalTimestamp() + "->" + punchList.get(i).printAdjustedTimestamp());
         }
+
         for (int i = 0; i < punchList.size(); ++i) {
+            if (punchList.get(i).geteventData() == "Lunch Start"){
+                lunchTime = true;
+            }
             if ((punchList.get(i).getPunchTypeId() == 1) && !(inBlock)) {
                 inBlock = true;
                 difference = punchList.get(i).getAdjustedTimeStamp().getTimeInMillis();
             }
-            if ((punchList.get(i).getPunchTypeId() == 0) && (inBlock)) {
+            if ((punchList.get(i).getPunchTypeId() == 0) && (inBlock)){
                 inBlock = false;
                 difference = punchList.get(i).getAdjustedTimeStamp().getTimeInMillis() - difference;
                 totalMinutes += difference / 60000;
+                System.out.println(eventData);
             }
             if ((punchList.get(i).getPunchTypeId() == 2) && (inBlock)) {
                 inBlock = false;
             }
-            if (totalMinutes >= lunchDeduct) {
+            if ((totalMinutes >= lunchDeduct) && (lunchTime == false)) {
                 totalMinutes = totalMinutes - 30;
                 //System.out.println(difference);
                 //System.out.println(totalMinutes);
                 //System.out.println(max);
-                lunchTime = true;
             }
         }
         return totalMinutes;

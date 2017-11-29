@@ -257,6 +257,26 @@ public class TASDatabase {
         return punchList;
     }
     
+    public ArrayList<Punch> getPunchListAsJSON(Punch p) {
+       //Call getPunch List
+       String badgeId = p.getBadgeId();
+       GregorianCalendar OTS = p.getOriginaltimestamp();
+       String sdf = new SimpleDateFormat("YYYY-MM-dd").format(OTS.getTime());
+       ArrayList<Punch> punchList = getPunchList(badgeId, sdf);
+       
+       //Call Adjust
+       int shiftid = getShiftByBadge(badgeId);
+       Shift s1 = getShift(shiftid);
+       for (int i = 0; i < punchList.size(); ++i) {
+            punchList.get(i).adjust(s1);
+        }
+
+       //JSON
+
+       return null;
+   }
+    
+    
     public int getMinutesAccrued(Punch p) {
         String badgeid = p.getBadgeId();
         GregorianCalendar OTS = p.getOriginaltimestamp();
@@ -289,7 +309,6 @@ public class TASDatabase {
                 inBlock = false;
                 difference = punchList.get(i).getAdjustedTimeStamp().getTimeInMillis() - difference;
                 totalMinutes += difference / 60000;
-                System.out.println(eventData);
             }
             if ((punchList.get(i).getPunchTypeId() == 2) && (inBlock)) {
                 inBlock = false;

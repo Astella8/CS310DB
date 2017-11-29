@@ -254,7 +254,7 @@ public class TASDatabase {
         }
         catch (SQLException ex){
         }
-        return punchList;
+        return punchList; 
     }
     
     public ArrayList<Punch> getPunchListAsJSON(Punch p) {

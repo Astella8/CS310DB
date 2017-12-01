@@ -261,7 +261,7 @@ public class TASDatabase {
         return punchList; 
     }
     
-    public ArrayList<Punch> getPunchListAsJSON(Punch p) {
+    public String getPunchListAsJSON(Punch p) {
        //Call getPunch List
        String badgeId = p.getBadgeId();
        GregorianCalendar OTS = p.getOriginaltimestamp();
@@ -289,8 +289,12 @@ public class TASDatabase {
            punchData.put("adjustedTimestamp", String.valueOf(nextPunch.getAdjustedTimeStamp()));
            punchDataList.add(punchData);
        }
-
-       return null;
+       int accruedMinutes = getMinutesAccrued(p);
+       punchData.put("totalminutes", String.valueOf(accruedMinutes));
+       
+       String json = JSONValue.toJSONString(punchDataList);
+       System.out.println(json);
+       return json;
    }
     
     

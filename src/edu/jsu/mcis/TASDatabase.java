@@ -281,16 +281,15 @@ public class TASDatabase {
        ArrayList<HashMap<String,String>> jsonData = new ArrayList<>();
        int totalMinutes = getMinutesAccrued(p);
        for (int i = 0; i < punchList.size(); i++ ) {
-           System.out.println("Help");
            punchData = new HashMap<>();
            Punch nextPunch = punchList.get(i);
            punchData.put("id", String.valueOf(punchList.get(i).getPunchId()));
            punchData.put("badgeid", String.valueOf(punchList.get(i).getBadgeId()));
            punchData.put("terminalid", String.valueOf(punchList.get(i).getTerminalId()));
-           punchData.put("ideventtypeid", String.valueOf(punchList.get(i).geteventtypeid()));
-          // punchData.put("eventdata", String.valueOf(punchList.get(i).geteventdata()));
-           punchData.put("originalTimestamp", String.valueOf(punchList.get(i).getOriginaltimestamp().getTimeInMillis()));
-           punchData.put("adjustedTimestamp", String.valueOf(punchList.get(i).getAdjustedTimeStamp().getTimeInMillis()));
+           punchData.put("eventtypeid", String.valueOf(punchList.get(i).geteventtypeid()));
+           punchData.put("eventdata", String.valueOf(punchList.get(i).geteventData()));
+           punchData.put("originaltimestamp", String.valueOf(punchList.get(i).getOriginaltimestamp().getTimeInMillis()));
+           punchData.put("adjustedtimestamp", String.valueOf(punchList.get(i).getAdjustedTimeStamp().getTimeInMillis()));
            jsonData.add(punchData);
            
        }

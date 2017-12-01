@@ -7,6 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.HashMap;
+import org.json.simple.*;
+
 
 /**
  * The TASDatabase class connects to the mySQL database and gets necessary data
@@ -272,6 +276,19 @@ public class TASDatabase {
         }
 
        //JSON
+       ArrayList<HashMap<String,String>> punchDataList = new ArrayList<>();
+       HashMap<String, String> punchData = new HashMap<>();
+       for (int i = 0; i < punchData.size(); ++i) {
+           Punch nextPunch = punchList.get(i);
+           punchData.put("id", String.valueOf(p.getPunchId()));
+           punchData.put("badgeid", String.valueOf(nextPunch.getBadgeId()));
+           punchData.put("terminalid", String.valueOf(nextPunch.getTerminalId()));
+           punchData.put("ideventtypeid", String.valueOf(nextPunch.geteventtypeid()));
+           punchData.put("eventdata", String.valueOf(nextPunch.geteventdata()));
+           punchData.put("originalTimestamp", String.valueOf(nextPunch.getOriginaltimestamp()));
+           punchData.put("adjustedTimestamp", String.valueOf(nextPunch.getAdjustedTimeStamp()));
+           punchDataList.add(punchData);
+       }
 
        return null;
    }

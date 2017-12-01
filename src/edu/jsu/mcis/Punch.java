@@ -192,6 +192,8 @@ public class Punch {
     public int getPunchTypeId() {
         return punchTypeId;
     }
+    
+    
 
     /**
      *
@@ -315,6 +317,10 @@ public class Punch {
         }
 
         return "#" + badgeId + Status + new SimpleDateFormat("EEE MM/dd/YYYY HH:mm:ss").format(adjusted.getTime()).toUpperCase() + " (" + eventData + ")";
+    }
+
+    Object geteventdata() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

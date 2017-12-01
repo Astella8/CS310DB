@@ -276,23 +276,31 @@ public class TASDatabase {
         }
 
        //JSON
-       ArrayList<HashMap<String,String>> punchDataList = new ArrayList<>();
-       HashMap<String, String> punchData = new HashMap<>();
-       for (int i = 0; i < punchData.size(); ++i) {
-           Punch nextPunch = punchList.get(i);
-           punchData.put("id", String.valueOf(p.getPunchId()));
-           punchData.put("badgeid", String.valueOf(nextPunch.getBadgeId()));
-           punchData.put("terminalid", String.valueOf(nextPunch.getTerminalId()));
-           punchData.put("ideventtypeid", String.valueOf(nextPunch.geteventtypeid()));
-           punchData.put("eventdata", String.valueOf(nextPunch.geteventdata()));
-           punchData.put("originalTimestamp", String.valueOf(nextPunch.getOriginaltimestamp()));
-           punchData.put("adjustedTimestamp", String.valueOf(nextPunch.getAdjustedTimeStamp()));
-           punchDataList.add(punchData);
-       }
-       int accruedMinutes = getMinutesAccrued(p);
-       punchData.put("totalminutes", String.valueOf(accruedMinutes));
        
-       String json = JSONValue.toJSONString(punchDataList);
+       HashMap<String, String> punchData = new HashMap<>();
+       ArrayList<HashMap<String,String>> jsonData = new ArrayList<>();
+       int totalMinutes = getMinutesAccrued(p);
+       for (int i = 0; i < punchList.size(); i++ ) {
+           System.out.println("Help");
+           punchData = new HashMap<>();
+           Punch nextPunch = punchList.get(i);
+           punchData.put("id", String.valueOf(punchList.get(i).getPunchId()));
+           punchData.put("badgeid", String.valueOf(punchList.get(i).getBadgeId()));
+           punchData.put("terminalid", String.valueOf(punchList.get(i).getTerminalId()));
+           punchData.put("ideventtypeid", String.valueOf(punchList.get(i).geteventtypeid()));
+          // punchData.put("eventdata", String.valueOf(punchList.get(i).geteventdata()));
+           punchData.put("originalTimestamp", String.valueOf(punchList.get(i).getOriginaltimestamp().getTimeInMillis()));
+           punchData.put("adjustedTimestamp", String.valueOf(punchList.get(i).getAdjustedTimeStamp().getTimeInMillis()));
+           jsonData.add(punchData);
+           
+       }
+       
+       HashMap<String,String>minutesAccrued = new HashMap<>();
+       minutesAccrued.put("totalminutes", String.valueOf(totalMinutes));
+       
+       
+       jsonData.add(minutesAccrued);
+       String json = JSONValue.toJSONString(jsonData);
        System.out.println(json);
        return json;
    }
